@@ -22,6 +22,7 @@ set -gx fish_cursor_replace_one underscore
 # disable greeting
 set -U fish_greeting
 
+# fish
 alias reload "exec fish"
 
 # git
@@ -43,6 +44,9 @@ alias ll "eza -l --group-directories-first";
 alias la "eza -a --group-directories-first";
 alias lt "eza --tree --group-directories-first";
 alias lla "eza -la --group-directories-first";
+
+# nvim
+alias vim "nvim"
 
 # other
 alias grep "rg"
@@ -79,7 +83,6 @@ function on_fish_bind_mode --on-variable fish_bind_mode
     set vi_mode_symbol (set_color '#1a1b26' --background $bg_color normal)$char(set_color normal)
   end
 end
-
 
 # starship
 starship init fish | source
