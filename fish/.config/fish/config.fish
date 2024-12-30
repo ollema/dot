@@ -41,6 +41,9 @@ alias la "eza -a --group-directories-first";
 alias lt "eza --tree --group-directories-first";
 alias lla "eza -la --group-directories-first";
 
+# other
+alias grep "rg"
+
 # vim mode
 fish_vi_key_bindings
 bind -M insert -k nul accept-autosuggestion
