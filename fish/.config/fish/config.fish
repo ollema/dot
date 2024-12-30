@@ -12,10 +12,10 @@ set -gx fish_cursor_replace_one underscore
 # disable greeting
 set -U fish_greeting
 
-# aliases
 alias reload "exec fish"
 
-# git abbreviations
+
+# git
 abbr gs "git status"
 abbr ga "git add ."
 abbr gcm "git commit -m"
@@ -25,6 +25,14 @@ abbr gp "git push"
 abbr gl "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 abbr gd "git diff"
 abbr gf "git fetch"
+
+# ls
+set -gx EZA_CONFIG_DIR $HOME/.config/eza
+alias ls "eza --group-directories-first";
+alias ll "eza -l --group-directories-first";
+alias la "eza -a --group-directories-first";
+alias lt "eza --tree --group-directories-first";
+alias lla "eza -la --group-directories-first";
 
 # vim mode
 fish_vi_key_bindings
