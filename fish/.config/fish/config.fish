@@ -1,5 +1,5 @@
 if status is-interactive
-    # commands to run in interactive sessions can go here
+  # commands to run in interactive sessions can go here
 end
 
 # cursor styles
@@ -58,6 +58,9 @@ function on_fish_bind_mode --on-variable fish_bind_mode
     set vi_mode_symbol (set_color '#1a1b26' --background $bg_color normal)$char(set_color normal)
   end
 end
+
+# brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # starship
 starship init fish | source
