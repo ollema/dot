@@ -65,3 +65,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # starship
 starship init fish | source
 
+# pnpm
+set -gx PNPM_HOME "/Users/s0001325/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+
