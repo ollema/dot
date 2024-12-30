@@ -2,6 +2,13 @@ if status is-interactive
   # commands to run in interactive sessions can go here
 end
 
+# brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+set -gx EDITOR (which nvim)
+set -gx VISUAL $EDITOR
+set -gx SUDO_EDITOR $EDITOR
+
 # cursor styles
 set -gx fish_vi_force_cursor 1
 set -gx fish_cursor_default block
@@ -13,7 +20,6 @@ set -gx fish_cursor_replace_one underscore
 set -U fish_greeting
 
 alias reload "exec fish"
-
 
 # git
 abbr gs "git status"
@@ -67,8 +73,6 @@ function on_fish_bind_mode --on-variable fish_bind_mode
   end
 end
 
-# brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # starship
 starship init fish | source
