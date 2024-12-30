@@ -2,6 +2,9 @@ if status is-interactive
   # commands to run in interactive sessions can go here
 end
 
+# set XDG_CONFIG_HOME
+set -gx XDG_CONFIG_HOME $HOME/.config
+
 # brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -34,7 +37,7 @@ abbr gd "git diff"
 abbr gf "git fetch"
 
 # ls
-set -gx EZA_CONFIG_DIR $HOME/.config/eza
+set -gx EZA_CONFIG_DIR $XDG_CONFIG_HOME/eza
 alias ls "eza --group-directories-first";
 alias ll "eza -l --group-directories-first";
 alias la "eza -a --group-directories-first";
