@@ -22,6 +22,7 @@ set -U fish_greeting
 alias reload "exec fish"
 
 # git
+alias gg "lazygit"
 abbr gs "git status"
 abbr ga "git add ."
 abbr gcm "git commit -m"
