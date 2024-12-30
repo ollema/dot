@@ -32,6 +32,9 @@ return {
         return '%2l:%-2v'
       end
 
+      -- Fast and familiar per-line commenting
+      require('mini.comment').setup()
+
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
