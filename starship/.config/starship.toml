@@ -15,9 +15,8 @@ $character"""
 style = "blue"
 
 [character]
-success_symbol = "[❯](purple)"
+success_symbol = "[❯](blue)"
 error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
 
 [git_branch]
 format = "[$branch]($style)"
