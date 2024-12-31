@@ -56,4 +56,7 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
+-- shell
+vim.opt.shell = '/opt/homebrew/bin/fish'
+
 -- vim: ts=2 sts=2 sw=2 et
