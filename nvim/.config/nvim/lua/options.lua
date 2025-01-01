@@ -1,62 +1,41 @@
--- [[ Setting options ]]
-
--- make line numbers default
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
--- don't show the mode, since it's already in the status line
-vim.opt.showmode = false
-
--- sync clipboard between OS and Neovim.
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
-
--- enable break indent
-vim.opt.breakindent = true
-
--- save undo history
-vim.opt.undofile = true
-
--- case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
-
--- decrease update time
-vim.opt.updatetime = 250
-
--- decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
-
--- configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- sets how neovim will display certain whitespace characters in the editor.
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
--- show which line your cursor is on
-vim.opt.cursorline = true
-
--- minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
-
--- tabstop
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-
--- shell
+-- general
+vim.opt.undofile = true -- save undo history
+vim.opt.backup = false -- don't store backup while overwriting the file
+vim.opt.writebackup = false -- don't store backup while overwriting the file
+vim.opt.mouse = 'a' -- enable mouse support
+vim.cmd 'filetype plugin indent on' -- enable all filetype plugins
 vim.opt.shell = '/opt/homebrew/bin/fish'
+vim.opt.updatetime = 250 -- reduce time for displaying signs
+vim.opt.timeoutlen = 300 -- time to wait for a mapped sequence to complete
+vim.opt.shortmess:append 'WcC' -- Reduce command line messages
+vim.opt.splitkeep = 'screen' -- Reduce scroll during window split
+
+-- appearance
+vim.breakindent = true -- indent wrapped lines to match the start
+vim.opt.cursorline = true -- highlight the current line
+vim.opt.linebreak = true -- wrap long lines at 'breakat' characters (if 'wrap' is set)
+vim.opt.number = true -- show line numbers
+vim.opt.relativenumber = true -- show relative line numbers
+vim.opt.splitbelow = true -- open new splits below the current one
+vim.opt.splitright = true -- open new splits to the right of the current one
+vim.opt.ruler = false -- don't show the cursor position in the command line
+vim.opt.showmode = false -- don't show the mode in the command line
+vim.opt.wrap = false -- don't wrap lines at word boundaries
+vim.opt.signcolumn = 'yes' -- always show the sign column (otherwise it will shift the text)
+vim.opt.fillchars = 'eob: ' -- fill the end of the buffer with spaces
+vim.opt.scrolloff = 10 -- keep 10 lines above/below cursor
+vim.opt.list = true -- show some helper symbols
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' } -- customize helper symbols
+
+-- editing
+vim.opt.ignorecase = true -- ignore case when searching
+vim.opt.incsearch = true -- show search matches as you type
+vim.opt.infercase = true -- infer letter cases for a richer built-in keyword completion
+vim.opt.smartcase = true -- override 'ignorecase' if the search pattern contains uppercase characters
+vim.opt.smartindent = true -- auto-indent new lines
+vim.opt.completeopt = 'menuone,noinsert,noselect' -- customize completions
+vim.opt.virtualedit = 'block' -- allow the cursor to move to any position in visual block mode
+vim.opt.formatoptions = 'qjl1' -- don't autoformat comments
+vim.opt.inccommand = 'split' -- preview substitutions as you type
 
 -- vim: ts=2 sts=2 sw=2 et
