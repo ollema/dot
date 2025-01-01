@@ -8,7 +8,6 @@ return {
     input = { enabled = true }, -- better vim.ui.input
     notifier = { enabled = true }, -- pretty vim.notify
     quickfile = { enabled = true }, -- render single files as quickly as possible
-    scroll = { enabled = true }, -- smooth scrolling
     statuscolumn = { enabled = true }, -- pretty stauscolumn
   },
 
