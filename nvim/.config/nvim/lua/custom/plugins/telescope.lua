@@ -1,5 +1,5 @@
 return {
-  { -- Fuzzy Finder (files, lsp, etc)
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -104,5 +104,3 @@ return {
     end,
   },
 }
-
--- vim: ts=2 sts=2 sw=2 et

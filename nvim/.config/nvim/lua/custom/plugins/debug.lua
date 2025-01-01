@@ -1,13 +1,5 @@
--- debug.lua
---
---
--- primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well.
-
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
@@ -144,5 +136,3 @@ return {
     }
   end,
 }
-
--- vim: ts=2 sts=2 sw=2 et

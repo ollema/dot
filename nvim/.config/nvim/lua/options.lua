@@ -37,5 +37,3 @@ vim.opt.completeopt = 'menuone,noinsert,noselect' -- customize completions
 vim.opt.virtualedit = 'block' -- allow the cursor to move to any position in visual block mode
 vim.opt.formatoptions = 'qjl1' -- don't autoformat comments
 vim.opt.inccommand = 'split' -- preview substitutions as you type
-
--- vim: ts=2 sts=2 sw=2 et

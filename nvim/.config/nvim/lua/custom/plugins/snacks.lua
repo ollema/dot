@@ -3,7 +3,7 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
-    dashboard = { enabled = true }, -- start screen
+    dashboard = { enabled = true },
   },
 
   -- stylua: ignore start
