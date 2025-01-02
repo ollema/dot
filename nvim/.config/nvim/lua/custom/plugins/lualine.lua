@@ -27,7 +27,7 @@ return {
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch' },
-        lualine_c = { 'filename' },
+        lualine_c = { 'filename', 'harpoon2' },
         lualine_x = { 'encoding', 'filetype' },
         lualine_y = {
           {
@@ -62,6 +62,15 @@ return {
         'oil',
         toggleterm_extension,
         'trouble',
+      },
+    },
+  },
+  {
+    'letieu/harpoon-lualine',
+    dependencies = {
+      {
+        'ThePrimeagen/harpoon',
+        branch = 'harpoon2',
       },
     },
   },
