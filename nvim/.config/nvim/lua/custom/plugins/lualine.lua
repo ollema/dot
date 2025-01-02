@@ -1,3 +1,13 @@
+local function file_from_path(path)
+  return path:match '([^/]+)$'
+end
+
+local function get_harpoon_indicator(label)
+  return function(harpoon_entry)
+    return label .. ' ' .. file_from_path(harpoon_entry.value)
+  end
+end
+
 local toggleterm_status = function()
   return '#' .. vim.b.toggle_number
 end
@@ -27,7 +37,28 @@ return {
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch' },
-        lualine_c = { 'filename', 'harpoon2' },
+        lualine_c = {
+          { 'filename', separator = '' },
+          { '%=', separator = '' },
+          {
+            'harpoon2',
+            indicators = {
+              get_harpoon_indicator '1',
+              get_harpoon_indicator '2',
+              get_harpoon_indicator '3',
+              get_harpoon_indicator '4',
+            },
+            active_indicators = {
+              get_harpoon_indicator '[1]',
+              get_harpoon_indicator '[2]',
+              get_harpoon_indicator '[3]',
+              get_harpoon_indicator '[4]',
+            },
+            _separator = '  ',
+            color = { fg = '#414868' },
+            color_active = { fg = '#C0CAF5' },
+          },
+        },
         lualine_x = { 'encoding', 'filetype' },
         lualine_y = {
           {
