@@ -17,6 +17,9 @@ local toggleterm_extension = {
     lualine_a = { 'mode' },
     lualine_b = { toggleterm_status },
   },
+  inactive_sections = {
+    lualine_b = { toggleterm_status },
+  },
   filetypes = { 'toggleterm' },
 }
 
