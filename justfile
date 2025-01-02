@@ -1,8 +1,8 @@
 stow:
-  stow eza
-  stow fish
-  stow lazygit
-  stow ghostty
-  stow nvim
-  stow starship
+  stow --target ~/.config eza
+  stow --target ~/.config fish
+  stow --target ~/.config lazygit
+  stow --target ~/.config ghostty
+  stow --target ~/.config nvim
+  stow --target ~/.config starship
 
