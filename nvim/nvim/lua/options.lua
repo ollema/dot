@@ -33,6 +33,7 @@ vim.opt.incsearch = true -- show search matches as you type
 vim.opt.infercase = true -- infer letter cases for a richer built-in keyword completion
 vim.opt.smartcase = true -- override 'ignorecase' if the search pattern contains uppercase characters
 vim.opt.smartindent = true -- auto-indent new lines
+vim.opt.tabstop = 2 -- number of spaces that a <Tab> in the file counts for
 vim.opt.completeopt = 'menuone,noinsert,noselect' -- customize completions
 vim.opt.virtualedit = 'block' -- allow the cursor to move to any position in visual block mode
 vim.opt.formatoptions = 'qjl1' -- don't autoformat comments
