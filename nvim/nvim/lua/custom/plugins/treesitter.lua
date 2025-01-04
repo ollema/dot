@@ -11,6 +11,8 @@ return {
         'html',
         'lua',
         'luadoc',
+        'json',
+        'jsonc',
         'markdown',
         'markdown_inline',
         'query',
