@@ -8,26 +8,12 @@ local function get_harpoon_indicator(label)
   end
 end
 
-local toggleterm_status = function()
-  return '#' .. vim.b.toggle_number
-end
-
-local toggleterm_extension = {
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { toggleterm_status },
-  },
-  inactive_sections = {
-    lualine_b = { toggleterm_status },
-  },
-  filetypes = { 'toggleterm' },
-}
-
 return {
   {
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
+        globalstatus = true,
         icons_enabled = false,
         component_separators = { left = '|', right = '|' },
         section_separators = { left = nil, right = nil },
@@ -94,7 +80,6 @@ return {
         'lazy',
         'neo-tree',
         'oil',
-        toggleterm_extension,
         'trouble',
       },
     },
