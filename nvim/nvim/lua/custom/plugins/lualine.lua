@@ -19,7 +19,15 @@ return {
         section_separators = { left = nil, right = nil },
         disabled_filetypes = {
           statusline = {
+            'lazy',
+            'neotree',
             'snacks_dashboard',
+          },
+          winbar = {
+            'lazy',
+            'neotree',
+            'snacks_dashboard',
+            'snacks_terminal',
           },
         },
       },
@@ -27,7 +35,6 @@ return {
         lualine_a = { 'mode' },
         lualine_b = { 'branch' },
         lualine_c = {
-          { 'filename', separator = '' },
           { '%=', separator = '' },
           {
             'harpoon2',
@@ -52,7 +59,6 @@ return {
         lualine_y = {
           {
             'copilot',
-            -- Default values
             symbols = {
               status = {
                 icons = {
@@ -76,11 +82,46 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
+      winbar = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          {
+            'filename',
+            path = 1,
+            file_status = false,
+            newfile_status = false,
+            cond = function()
+              return vim.bo.buftype == ''
+            end,
+            color = { fg = '#6b7199', bg = 'none' },
+          },
+        },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
+      inactive_winbar = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          {
+            'filename',
+            path = 1,
+            file_status = false,
+            newfile_status = false,
+            cond = function()
+              return vim.bo.buftype == ''
+            end,
+            color = { fg = '#414868', bg = 'none' },
+          },
+        },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
       extensions = {
-        'lazy',
-        'neo-tree',
         'oil',
-        'trouble',
       },
     },
   },
