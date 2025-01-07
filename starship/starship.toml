@@ -1,5 +1,4 @@
 format = """
-${custom.vi_mode}\
 $username\
 $hostname\
 $directory\
@@ -15,8 +14,10 @@ $character"""
 style = "blue"
 
 [character]
-success_symbol = "[❯](blue)"
-error_symbol = "[❯](red)"
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vicmd_symbol = "[❮](bold blue)"
+vimcmd_visual_symbol = "[❮](bold purple)"
 
 [git_branch]
 format = "[$branch]($style)"
@@ -44,8 +45,3 @@ style = "yellow"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
-
-[custom.vi_mode]
-format="[$output]($style) "
-command = 'echo $vi_mode_symbol'
-when = 'test -n "$vi_mode_symbol"'
