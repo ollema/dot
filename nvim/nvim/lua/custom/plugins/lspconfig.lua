@@ -95,6 +95,7 @@ return {
     })
 
     local servers = {
+      basedpyright = {},
       jsonls = {
         filetypes = { 'json', 'jsonc' },
         settings = {
