@@ -6,7 +6,12 @@ end
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 # brew
-eval "$(brew shellenv)"
+switch (uname -s)
+    case Darwin
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    case Linux
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+end
 
 set -gx EDITOR (which nvim)
 set -gx VISUAL $EDITOR
