@@ -1,12 +1,12 @@
 if status is-interactive
-  # commands to run in interactive sessions can go here
+    # commands to run in interactive sessions can go here
 end
 
 # set XDG_CONFIG_HOME
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 # brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 set -gx EDITOR (which nvim)
 set -gx VISUAL $EDITOR
@@ -26,7 +26,7 @@ set -U fish_greeting
 alias reload "exec fish"
 
 # git
-alias gg "lazygit"
+alias gg lazygit
 abbr gs "git status"
 abbr ga "git add ."
 abbr gcm "git commit -m"
@@ -39,58 +39,58 @@ abbr gf "git fetch"
 
 # ls
 set -gx EZA_CONFIG_DIR $XDG_CONFIG_HOME/eza
-alias ls "eza --group-directories-first";
-alias ll "eza -l --group-directories-first";
-alias la "eza -a --group-directories-first";
-alias lt "eza --tree --group-directories-first";
-alias lla "eza -la --group-directories-first";
+alias ls "eza --group-directories-first"
+alias ll "eza -l --group-directories-first"
+alias la "eza -a --group-directories-first"
+alias lt "eza --tree --group-directories-first"
+alias lla "eza -la --group-directories-first"
 
 # nvim
-alias vim "nvim"
+alias vim nvim
 
 # other
-alias grep "rg"
+alias grep rg
 
 # vim mode
 fish_vi_key_bindings
 bind -M insert -k nul accept-autosuggestion
 
 function on_fish_bind_mode --on-variable fish_bind_mode
-  # export the vi_mode_symbol variable which Starship can use
-  set --global --export vi_mode_symbol ""
-  set --local bg_color
+    # export the vi_mode_symbol variable which Starship can use
+    set --global --export vi_mode_symbol ""
+    set --local bg_color
 
-  set --local char
-  if test "$fish_key_bindings" = fish_vi_key_bindings
-    switch $fish_bind_mode
-      case default
-        set bg_color blue
-        set char " N "
-      case insert
-        set bg_color green
-        set char " I "
-      case replace replace_one
-        set bg_color green
-        set char " R "
-      case visual
-        set bg_color brmagenta
-        set char " V "
-      case '*'
-      set bg_color cyan
-      set char " ? "
+    set --local char
+    if test "$fish_key_bindings" = fish_vi_key_bindings
+        switch $fish_bind_mode
+            case default
+                set bg_color blue
+                set char " N "
+            case insert
+                set bg_color green
+                set char " I "
+            case replace replace_one
+                set bg_color green
+                set char " R "
+            case visual
+                set bg_color brmagenta
+                set char " V "
+            case '*'
+                set bg_color cyan
+                set char " ? "
+        end
+
+        set vi_mode_symbol (set_color '#1a1b26' --background $bg_color normal)$char(set_color normal)
     end
-
-    set vi_mode_symbol (set_color '#1a1b26' --background $bg_color normal)$char(set_color normal)
-  end
 end
 
 # starship
 starship init fish | source
 
 # pnpm
-set -gx PNPM_HOME "/Users/s0001325/Library/pnpm"
+set -gx PNPM_HOME /Users/s0001325/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 
 # tokyonight color palette
@@ -128,4 +128,3 @@ set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 set -g fish_pager_color_selected_background --background=$selection
-
