@@ -4,7 +4,9 @@ stow:
     stow --target ~/.config lazygit
     stow --target ~/.config ghostty
     stow --target ~/.config nvim
+    stow --target ~/.config shpool
     stow --target ~/.config starship
+    stow ssh
 
 dump:
     brew bundle dump --force --formula --file={{ justfile_directory() }}/Brewfile
