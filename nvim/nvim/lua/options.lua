@@ -4,7 +4,7 @@ vim.opt.backup = false -- don't store backup while overwriting the file
 vim.opt.writebackup = false -- don't store backup while overwriting the file
 vim.opt.mouse = 'a' -- enable mouse support
 vim.cmd 'filetype plugin indent on' -- enable all filetype plugins
-vim.opt.shell = '/opt/homebrew/bin/fish'
+vim.opt.shell = 'fish'
 vim.opt.updatetime = 250 -- reduce time for displaying signs
 vim.opt.timeoutlen = 300 -- time to wait for a mapped sequence to complete
 vim.opt.shortmess:append 'WcC' -- Reduce command line messages
