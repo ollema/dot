@@ -1,7 +1,3 @@
-if status is-interactive
-    # commands to run in interactive sessions can go here
-end
-
 # set XDG_CONFIG_HOME
 set -gx XDG_CONFIG_HOME $HOME/.config
 
@@ -13,9 +9,16 @@ switch (uname -s)
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 end
 
+# set editor
 set -gx EDITOR (which nvim)
 set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
+
+# vim mode
+fish_vi_key_bindings
+for mode in insert default visual
+    bind -M $mode \cy forward-char
+end
 
 # cursor styles
 set -gx fish_vi_force_cursor 1
@@ -26,9 +29,6 @@ set -gx fish_cursor_replace_one underscore
 
 # disable greeting
 set -U fish_greeting
-
-# fish
-alias reload "exec fish"
 
 # git
 alias gg lazygit
@@ -54,39 +54,12 @@ alias lla "eza -la --group-directories-first"
 alias vim nvim
 
 # other
+alias reload "exec fish"
 alias grep rg
+alias find fd
 
-# vim mode
-fish_vi_key_bindings
-bind -M insert -k nul accept-autosuggestion
-
-function on_fish_bind_mode --on-variable fish_bind_mode
-    # export the vi_mode_symbol variable which Starship can use
-    set --global --export vi_mode_symbol ""
-    set --local bg_color
-
-    set --local char
-    if test "$fish_key_bindings" = fish_vi_key_bindings
-        switch $fish_bind_mode
-            case default
-                set bg_color blue
-                set char " N "
-            case insert
-                set bg_color green
-                set char " I "
-            case replace replace_one
-                set bg_color green
-                set char " R "
-            case visual
-                set bg_color brmagenta
-                set char " V "
-            case '*'
-                set bg_color cyan
-                set char " ? "
-        end
-
-        set vi_mode_symbol (set_color '#1a1b26' --background $bg_color normal)$char(set_color normal)
-    end
+function mwdev
+    ssh madlad-server-dev
 end
 
 # starship
@@ -95,8 +68,11 @@ starship init fish | source
 # pnpm
 set -gx PNPM_HOME /Users/s0001325/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
-    set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH $PNPM_HOME $PATH
 end
+
+# cargo
+source $HOME/.cargo/env.fish
 
 # tokyonight color palette
 set -l foreground c0caf5
