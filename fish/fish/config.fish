@@ -6,7 +6,9 @@ switch (uname -s)
     case Darwin
         eval "$(/opt/homebrew/bin/brew shellenv)"
     case Linux
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        if test -x /home/linuxbrew/.linuxbrew/bin/brew
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        end
 end
 
 # set editor
@@ -72,7 +74,9 @@ if not string match -q -- $PNPM_HOME $PATH
 end
 
 # cargo
-source $HOME/.cargo/env.fish
+if test -x $HOME/.cargo/env.fish
+    source $HOME/.cargo/env.fish
+end
 
 # tokyonight color palette
 set -l foreground c0caf5
