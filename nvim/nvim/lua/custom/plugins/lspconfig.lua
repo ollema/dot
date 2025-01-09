@@ -126,6 +126,16 @@ return {
         },
       },
       lua_ls = {},
+      ruff = {
+        settings = {
+          configurationPreference = 'editorOnly',
+          lineLength = 100,
+          organizeImports = false,
+          lint = {
+            enable = false,
+          },
+        },
+      },
       stylua = {},
       svelte = {},
       ts_ls = {},

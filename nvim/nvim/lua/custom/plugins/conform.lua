@@ -35,6 +35,7 @@ return {
         fish = { 'fish_indent' },
         just = { 'just' },
         lua = { 'stylua' },
+        python = { 'ruff_format' },
         sh = { 'shfmt' },
         svelte = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
