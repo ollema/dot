@@ -1,3 +1,7 @@
 command = /opt/homebrew/bin/fish
 theme = tokyonight.nvim
 font-family = CaskaydiaCove Nerd Font Mono
+window-inherit-working-directory = false
+macos-option-as-alt = true
+auto-update=check
+auto-update-channel=tip
