@@ -100,6 +100,7 @@ return {
         filetypes = { 'json', 'jsonc' },
         settings = {
           json = {
+            validate = { enable = true },
             schemas = {
               {
                 fileMatch = { 'package.json' },
@@ -120,6 +121,10 @@ return {
               {
                 fileMatch = { '.eslintrc', '.eslintrc.json' },
                 url = 'https://json.schemastore.org/eslintrc.json',
+              },
+              {
+                fileMatch = { 'members.json' },
+                url = '/Users/s0001325/repos/ufpersonslist/members.schema.json',
               },
             },
           },
