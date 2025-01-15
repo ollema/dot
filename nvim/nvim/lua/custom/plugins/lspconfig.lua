@@ -10,47 +10,31 @@ return {
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+      -- stylua: ignore
       callback = function(event)
         local map = function(keys, func, desc, mode)
           mode = mode or 'n'
-          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'lsp: ' .. desc })
+          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
-        -- jump to the definition of the word under your cursor.
-        --  this is where a variable was first declared, or where a function is defined, etc.
-        map('gd', require('telescope.builtin').lsp_definitions, '[g]oto [d]efinition')
+        map('<leader>cl', '<cmd>LspInfo<cr>', 'Info')
 
-        -- find references for the word under your cursor.
-        map('gr', require('telescope.builtin').lsp_references, '[g]oto [r]eferences')
+        map('gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition')
+        map('gr', function() Snacks.picker.lsp_references() end, 'Goto References')
+        map('gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
+        map('gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto T[y]pe Definition')
+        map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
-        -- jump to the implementation of the word under your cursor.
-        --  useful when your language has ways of declaring types without an actual implementation.
-        map('gI', require('telescope.builtin').lsp_implementations, '[g]oto [I]mplementation')
+        map('K', function() return vim.lsp.buf.hover() end, 'Hover')
+        map('gK', function() return vim.lsp.buf.signature_help() end, 'Signature Help')
 
-        -- jump to the type of the word under your cursor.
-        --  useful when you're not sure what type a variable is and you want to see
-        --  the definition of its *type*, not where it was *defined*.
-        map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'type [D]efinition')
+        map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
+        map('<leader>cA', function() vim.lsp.buf.code_action({ apply = true, context = { only = { "source" }, diagnostics = {}, }, }) end, 'Source Action')
+        map('<leader>cr', vim.lsp.buf.rename, 'Rename variable')
+        map('<leader>cR', function() Snacks.rename.rename_file() end, 'Rename file')
 
-        -- fuzzy find all the symbols in your current document.
-        --  symbols are things like variables, functions, types, etc.
-        map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[d]ocument [s]ymbols')
-
-        -- fuzzy find all the symbols in your current workspace.
-        --  similar to document symbols, except searches over your entire project.
-        map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[w]orkspace [s]ymbols')
-
-        -- rename the variable under your cursor.
-        --  most language servers support renaming across files, etc.
-        map('<leader>rn', vim.lsp.buf.rename, '[r]e[n]ame')
-
-        -- execute a code action, usually your cursor needs to be on top of an error
-        -- or a suggestion from your LSP for this to activate.
-        map('<leader>ca', vim.lsp.buf.code_action, '[c]ode [a]ction', { 'n', 'x' })
-
-        -- this is not Goto Definition, this is Goto Declaration.
-        --  For example, in C this would take you to the header.
-        map('gD', vim.lsp.buf.declaration, '[g]oto [D]eclaration')
+        map(']]', function() Snacks.words.jump(vim.v.count1) end, 'Next Reference', { 'n', 't' })
+        map('[[', function() Snacks.words.jump(-vim.v.count1) end, 'Prev Reference', { 'n', 't' })
       end,
     })
 
