@@ -5,3 +5,4 @@ window-inherit-working-directory = false
 macos-option-as-alt = true
 auto-update=check
 auto-update-channel=tip
+macos-titlebar-style = tabs
