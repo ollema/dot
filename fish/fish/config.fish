@@ -68,7 +68,7 @@ end
 starship init fish | source
 
 # pnpm
-set -gx PNPM_HOME /Users/s0001325/Library/pnpm
+set -gx PNPM_HOME $HOME/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH $PNPM_HOME $PATH
 end
@@ -77,6 +77,9 @@ end
 if test -x $HOME/.cargo/env.fish
     source $HOME/.cargo/env.fish
 end
+
+# uv
+fish_add_path $HOME/.local/bin
 
 # tokyonight color palette
 set -l foreground c0caf5
