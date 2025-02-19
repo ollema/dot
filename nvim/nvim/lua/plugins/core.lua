@@ -5,4 +5,10 @@ return {
       colorscheme = "tokyonight-night",
     },
   },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      image = {},
+    },
+  },
 }
