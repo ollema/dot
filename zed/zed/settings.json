@@ -1,0 +1,23 @@
+// zed settings
+{
+  // font settings
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
+  // ui settings
+  "theme": "Tokyo Night Storm",
+  // vim settings
+  "vim_mode": true,
+  "vim": {
+    "enable_vim_sneak": true
+  },
+  "relative_line_numbers": true,
+  "tab_bar": {
+    "show": true
+  },
+  "scrollbar": {
+    "show": "never"
+  },
+  "inlay_hints": {
+    "enabled": true
+  }
+}

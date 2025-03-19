@@ -6,6 +6,7 @@ stow:
     stow --target ~/.config nvim
     stow --target ~/.config shpool
     stow --target ~/.config starship
+    stow --target ~/.config zed
     stow ssh
 
 dump:
