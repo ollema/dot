@@ -3,8 +3,10 @@
   // font settings
   "ui_font_size": 14,
   "buffer_font_size": 14,
+
   // ui settings
-  "theme": "Tokyo Night Storm",
+  "theme": "Tokyo Night",
+
   // vim settings
   "vim_mode": true,
   "vim": {
