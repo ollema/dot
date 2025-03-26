@@ -64,6 +64,10 @@ function mwdev
     ssh madlad-server-dev
 end
 
+function mwprod
+    ssh
+end
+
 # starship
 starship init fish | source
 
@@ -116,3 +120,6 @@ set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 set -g fish_pager_color_selected_background --background=$selection
+
+test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
