@@ -9,3 +9,5 @@ vim.g.lazyvim_python_lsp = "basedpyright"
 
 -- use ruff instead of ruff_lsp
 vim.g.lazyvim_python_ruff = "ruff"
+
+vim.opt.clipboard = "unnamedplus"
