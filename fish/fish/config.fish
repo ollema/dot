@@ -11,6 +11,9 @@ switch (uname -s)
         end
 end
 
+# set SHELL
+set -gx SHELL (which fish)
+
 # set editor
 set -gx EDITOR (which nvim)
 set -gx VISUAL $EDITOR
