@@ -1,9 +1,6 @@
 # set XDG_CONFIG_HOME
 set -gx XDG_CONFIG_HOME $HOME/.config
 
-# iterm2 shell integration
-test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
-
 # brew
 switch (uname -s)
     case Darwin
@@ -34,42 +31,6 @@ set -gx fish_cursor_replace_one underscore
 
 # disable greeting
 set -U fish_greeting
-
-# git
-alias gg lazygit
-abbr gs "git status"
-abbr ga "git add ."
-abbr gcm "git commit -m"
-abbr gca "git commit --amend"
-abbr gac "git add .; git commit --amend --no-edit"
-abbr gp "git push"
-abbr gl "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-abbr gd "git diff"
-abbr gf "git fetch"
-
-# ls
-set -gx EZA_CONFIG_DIR $XDG_CONFIG_HOME/eza
-alias ls "eza --group-directories-first"
-alias ll "eza -l --group-directories-first"
-alias la "eza -a --group-directories-first"
-alias lt "eza --tree --group-directories-first"
-alias lla "eza -la --group-directories-first"
-
-# nvim
-alias vim nvim
-
-# other
-alias reload "exec fish"
-alias grep rg
-alias find fd
-
-function mwdev
-    ssh madlad-server-dev
-end
-
-function mwprod
-    ssh
-end
 
 # starship
 starship init fish | source
@@ -123,3 +84,42 @@ set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 set -g fish_pager_color_selected_background --background=$selection
+
+# iterm2 shell integration
+test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
+
+# git
+alias gg lazygit
+abbr gs "git status"
+abbr ga "git add ."
+abbr gcm "git commit -m"
+abbr gca "git commit --amend"
+abbr gac "git add .; git commit --amend --no-edit"
+abbr gp "git push"
+abbr gl "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+abbr gd "git diff"
+abbr gf "git fetch"
+
+# ls
+set -gx EZA_CONFIG_DIR $XDG_CONFIG_HOME/eza
+alias ls "eza --group-directories-first"
+alias ll "eza -l --group-directories-first"
+alias la "eza -a --group-directories-first"
+alias lt "eza --tree --group-directories-first"
+alias lla "eza -la --group-directories-first"
+
+# nvim
+alias vim nvim
+
+# other
+alias reload "exec fish"
+alias grep rg
+alias find fd
+
+function mwdev
+    ssh madlad-server-dev
+end
+
+function mwprod
+    ssh
+end
