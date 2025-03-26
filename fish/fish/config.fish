@@ -1,6 +1,9 @@
 # set XDG_CONFIG_HOME
 set -gx XDG_CONFIG_HOME $HOME/.config
 
+# iterm2 shell integration
+test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
+
 # brew
 switch (uname -s)
     case Darwin
@@ -120,6 +123,3 @@ set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 set -g fish_pager_color_selected_background --background=$selection
-
-test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
-
