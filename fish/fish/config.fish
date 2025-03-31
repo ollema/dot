@@ -126,3 +126,6 @@ end
 function mwprod
     ssh
 end
+
+# load environment variables
+test -e {$HOME}/.env; and source {$HOME}/.env
