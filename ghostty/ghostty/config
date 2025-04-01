@@ -1,5 +1,5 @@
 command = /opt/homebrew/bin/fish
-theme = tokyonight.nvim
+theme = Dark Modern
 font-family = CaskaydiaCove Nerd Font Mono
 window-inherit-working-directory = false
 macos-option-as-alt = true
