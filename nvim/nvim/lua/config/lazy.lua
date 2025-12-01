@@ -23,16 +23,16 @@ require("lazy").setup({
     -- by default, only LazyVim plugins will be lazy-loaded. your custom plugins will load during startup.
     -- if you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
     lazy = false,
-    -- it's recommended to leave version=false for now, since a lot the plugins that support versioning
+    -- It's recommended to leave version=false for now, since a lot of the plugins that support versioning
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
-    enabled = true,
-    notify = false,
-  },
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
   performance = {
     rtp = {
       disabled_plugins = {
