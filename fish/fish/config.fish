@@ -52,6 +52,8 @@ end
 # uv
 fish_add_path $HOME/.local/bin
 
+fish_add_path $HOME/go/bin
+
 # tokyonight color palette
 set -l foreground c0caf5
 set -l selection 283457
@@ -129,3 +131,4 @@ end
 
 # load environment variables
 test -e {$HOME}/.env; and source {$HOME}/.env
+alias claude="/Users/s0001325/.claude/local/claude"
