@@ -41,7 +41,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="ripgrep",
         repo="BurntSushi/ripgrep",
-        version="14.1.1",
+        version="15.1.0",
         tag_prefix="",
         binary="rg",
         assets={
@@ -49,81 +49,81 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "ripgrep-{version}-x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "24ad76777745fbff131c8fbc466742b011f925bfa4fffa2ded6def23b5b937be",
-            Platform.LINUX_AMD64: "4cf9f2741e6c465ffdb7c26f38056a59e2a2544b51f7cc128ef28337eeae4d8e",
+            Platform.DARWIN_ARM64: "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715",
+            Platform.LINUX_AMD64: "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599",
         },
     ),
     Tool(
         name="fd",
         repo="sharkdp/fd",
-        version="10.2.0",
+        version="10.4.2",
         assets={
             Platform.DARWIN_ARM64: "fd-v{version}-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "fd-v{version}-x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "ae6327ba8c9a487cd63edd8bddd97da0207887a66d61e067dfe80c1430c5ae36",
-            Platform.LINUX_AMD64: "d9bfa25ec28624545c222992e1b00673b7c9ca5eb15393c40369f10b28f9c932",
+            Platform.DARWIN_ARM64: "623dc0afc81b92e4d4606b380d7bc91916ba7b97814263e554d50923a39e480a",
+            Platform.LINUX_AMD64: "e3257d48e29a6be965187dbd24ce9af564e0fe67b3e73c9bdcd180f4ec11bdde",
         },
     ),
     Tool(
         name="eza",
         repo="eza-community/eza",
-        version="0.20.14",
+        version="0.23.4",
         assets={Platform.LINUX_AMD64: "eza_x86_64-unknown-linux-gnu.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "d86f6641b05c17fba8d55978f038428134d0a246bc53d8695b0193a3a214bce7"
+            Platform.LINUX_AMD64: "0c38665440226cd8bef5d1d4f3bc6ff77c927fb0d68b752739105db7ab5b358d"
         },
     ),
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.57.0",
+        version="0.71.0",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "b4e1c5322652bc2672c32dc37993f8d501df7aecb3fa9e545a3d80eca8ae9a2f",
-            Platform.LINUX_AMD64: "a3c087a5f40e8bb4d9bfb26faffa094643df111a469646bef53154a54af9ff92",
+            Platform.DARWIN_ARM64: "02dfb11de8773cb79aa4fc5bfc77e75c6604ee14728bc849fc162dd91a9714c4",
+            Platform.LINUX_AMD64: "22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4",
         },
     ),
     Tool(
         name="jq",
         repo="jqlang/jq",
-        version="1.7.1",
+        version="1.8.1",
         tag_prefix="jq-",
         is_raw_binary=True,
         assets={Platform.DARWIN_ARM64: "jq-macos-arm64", Platform.LINUX_AMD64: "jq-linux-amd64"},
         sha256={
-            Platform.DARWIN_ARM64: "0bbe619e663e0de2c550be2fe0d240d076799d6f8a652b70fa04aea8a8362e8a",
-            Platform.LINUX_AMD64: "5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5",
+            Platform.DARWIN_ARM64: "a9fe3ea2f86dfc72f6728417521ec9067b343277152b114f4e98d8cb0e263603",
+            Platform.LINUX_AMD64: "020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d",
         },
     ),
     Tool(
         name="starship",
         repo="starship/starship",
-        version="1.21.1",
+        version="1.24.2",
         assets={
             Platform.DARWIN_ARM64: "starship-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "starship-x86_64-unknown-linux-musl.tar.gz",
         },
-        sha256={
-            Platform.DARWIN_ARM64: "cf1bf179c10b82ec05915323fbebabcc8f5be9a55678684706af4e1ff117ec89",
-            Platform.LINUX_AMD64: "744e21eb2e61b85b0c11378520ebb9e94218de965bca5b8c2266f6c3e23ff5be",
-        },
         symlinks=[Link(source="starship/starship.toml", target="~/.config/starship.toml")],
+        sha256={
+            Platform.DARWIN_ARM64: "d3a0da21374962625a2ee992110979bc1fa33424d7b6aea58a70405e26544fd9",
+            Platform.LINUX_AMD64: "00ff3c1f8ffb59b5c15d4b44c076bcca04d92cf0055c86b916248c14f3ae714a",
+        },
     ),
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.2.1",
+        version="4.6.0",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
-        sha256={
-            Platform.LINUX_AMD64: "19b88f3a255105226a660a771c81c99196a54f9057567f6dbfcfed68865acdb0"
-        },
         symlinks=[Link(source="fish", target="~/.config/fish")],
+        sha256={
+            Platform.LINUX_AMD64: "497c9c4e3fb3c006fe9d2c9a5a5447c1c90490b6b4ce6bfaf75e53b495c82f36"
+        },
     ),
 ]
