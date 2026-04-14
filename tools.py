@@ -7,6 +7,13 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from platforms import Platform
 
 
+class Link(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source: str  # path relative to repo root
+    target: str  # path with ~ to be expanded
+
+
 class Tool(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -20,6 +27,7 @@ class Tool(BaseModel):
     is_raw_binary: bool = False
     assets: dict[Platform, str]
     sha256: dict[Platform, str] = Field(default_factory=dict)
+    symlinks: list[Link] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def _reject_raw_with_extras(self) -> Self:
@@ -104,6 +112,7 @@ TOOLS: list[Tool] = [
             Platform.DARWIN_ARM64: "cf1bf179c10b82ec05915323fbebabcc8f5be9a55678684706af4e1ff117ec89",
             Platform.LINUX_AMD64: "744e21eb2e61b85b0c11378520ebb9e94218de965bca5b8c2266f6c3e23ff5be",
         },
+        symlinks=[Link(source="starship/starship.toml", target="~/.config/starship.toml")],
     ),
     Tool(
         name="fish",
@@ -115,5 +124,6 @@ TOOLS: list[Tool] = [
         sha256={
             Platform.LINUX_AMD64: "19b88f3a255105226a660a771c81c99196a54f9057567f6dbfcfed68865acdb0"
         },
+        symlinks=[Link(source="fish", target="~/.config/fish")],
     ),
 ]

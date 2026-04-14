@@ -2,23 +2,17 @@
 
 import shutil
 import sys
-from dataclasses import dataclass
 from pathlib import Path
+
+from tools import TOOLS, Link
 
 REPO_ROOT = Path(__file__).resolve().parent
 
-
-@dataclass
-class Link:
-    source: str  # path relative to repo root
-    target: str  # path with ~ to be expanded
-
-
-LINKS: list[Link] = [
-    Link(source="fish", target="~/.config/fish"),
+STANDALONE_LINKS: list[Link] = [
     Link(source="ghostty", target="~/.config/ghostty"),
-    Link(source="starship/starship.toml", target="~/.config/starship.toml"),
 ]
+
+LINKS: list[Link] = [link for tool in TOOLS for link in tool.symlinks] + STANDALONE_LINKS
 
 
 def resolve(link: Link) -> tuple[Path, Path]:
