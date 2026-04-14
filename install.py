@@ -60,11 +60,20 @@ def extract_and_install(tool: Tool, data: bytes, asset_name: str) -> list[str]:
             found = find_binary(tmp_root, target)
             if found:
                 dest = INSTALL_DIR / target
-                shutil.copy2(found, dest)
-                dest.chmod(dest.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
+                atomic_install(found, dest)
                 installed.append(target)
 
     return installed
+
+
+def atomic_install(src: Path, dest: Path) -> None:
+    # Write to a sibling then os.replace, so we can overwrite a running
+    # binary (Linux ETXTBSY): rename unlinks the old dentry while the live
+    # process keeps executing from its inode.
+    tmp = dest.with_name(f".{dest.name}.new")
+    shutil.copy2(src, tmp)
+    tmp.chmod(tmp.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
+    tmp.replace(dest)
 
 
 def find_binary(root: Path, name: str) -> Path | None:
