@@ -1,8 +1,8 @@
 """Install CLI tools from GitHub release binaries."""
 
+import hashlib
 import io
 import os
-import platform
 import shutil
 import stat
 import tarfile
@@ -12,6 +12,8 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+import platforms
+from platforms import Platform
 from tools import TOOLS, Tool
 
 INSTALL_DIR = Path(os.environ.get("INSTALL_DIR", "~/.local/bin")).expanduser()
@@ -19,44 +21,14 @@ INSTALL_DIR = Path(os.environ.get("INSTALL_DIR", "~/.local/bin")).expanduser()
 GITHUB = "https://github.com"
 
 
-def detect_platform() -> dict[str, str]:
-    os_name = platform.system().lower()
-    machine = platform.machine().lower()
-
-    if os_name not in ("darwin", "linux"):
-        msg = f"unsupported OS: {os_name}"
-        raise SystemExit(msg)
-
-    arch_map = {"x86_64": "x86_64", "amd64": "x86_64", "aarch64": "aarch64", "arm64": "aarch64"}
-    arch = arch_map.get(machine)
-    if not arch:
-        msg = f"unsupported architecture: {machine}"
-        raise SystemExit(msg)
-
-    arch_go = "amd64" if arch == "x86_64" else "arm64"
-
-    target = "apple-darwin" if os_name == "darwin" else "unknown-linux-musl"
-
-    target_gnu = "apple-darwin" if os_name == "darwin" else "unknown-linux-gnu"
-
-    return {
-        "os": os_name,
-        "OS": os_name.capitalize(),
-        "arch": arch,
-        "arch_go": arch_go,
-        "target": target,
-        "target_gnu": target_gnu,
-    }
-
-
-def resolve_asset(tool: Tool, pf: dict[str, str]) -> str:
-    return tool.asset.format(version=tool.version, **pf)
+def resolve_asset(tool: Tool, pf: Platform) -> str:
+    return tool.assets[pf].format(version=tool.version)
 
 
 def download(url: str) -> bytes:
     # Fetching release binaries from GitHub over HTTPS; scheme is fixed.
     req = urllib.request.Request(url, headers={"User-Agent": "tools.py"})  # noqa: S310
-    with urllib.request.urlopen(req) as resp:  # noqa: S310
+    with urllib.request.urlopen(req, timeout=30) as resp:  # noqa: S310
         return resp.read()
 
 
@@ -102,9 +74,9 @@ def find_binary(root: Path, name: str) -> Path | None:
     return None
 
 
-def install_tool(tool: Tool, pf: dict[str, str]) -> None:
-    if tool.linux_only and pf["os"] != "linux":
-        print(f"  {tool.name} — skipped (linux only)")
+def install_tool(tool: Tool, pf: Platform) -> None:
+    if pf not in tool.assets:
+        print(f"  {tool.name} — skipped (not available on {pf.value})")
         return
 
     asset_name = resolve_asset(tool, pf)
@@ -118,6 +90,15 @@ def install_tool(tool: Tool, pf: dict[str, str]) -> None:
         print(f"    FAILED: {e.code} {e.reason} — {url}")
         return
 
+    expected = tool.sha256.get(pf)
+    if not expected:
+        print(f"    FAILED: no sha256 recorded for {asset_name}")
+        return
+    actual = hashlib.sha256(data).hexdigest()
+    if actual != expected:
+        print(f"    FAILED: sha256 mismatch (expected {expected}, got {actual})")
+        return
+
     installed = extract_and_install(tool, data, asset_name)
     if installed:
         print(f"    -> {', '.join(installed)}")
@@ -126,8 +107,8 @@ def install_tool(tool: Tool, pf: dict[str, str]) -> None:
 
 
 def main() -> None:
-    pf = detect_platform()
-    print(f"platform: {pf['os']}/{pf['arch']}")
+    pf = platforms.detect()
+    print(f"platform: {pf.value}")
     print(f"install dir: {INSTALL_DIR}\n")
 
     INSTALL_DIR.mkdir(parents=True, exist_ok=True)

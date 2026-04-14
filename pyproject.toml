@@ -8,6 +8,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "prek>=0.3.9",
     "pytest>=9",
     "ruff>=0.15",
     "ty>=0.0.30",
@@ -26,6 +27,7 @@ ignore = ["D", "T20", "COM812"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "ARG", "INP001", "PLC0415"]
+"tools.py" = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

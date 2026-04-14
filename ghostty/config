@@ -4,3 +4,7 @@ auto-update-channel = tip
 
 # shell config
 command = /usr/local/bin/fish
+
+# theming
+theme = Dark Modern
+font-family = CaskaydiaCove Nerd Font Mono

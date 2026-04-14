@@ -1,0 +1,36 @@
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "ruff-format"
+name = "ruff format"
+entry = "uv run ruff format --force-exclude"
+language = "system"
+types_or = ["python", "pyi"]
+require_serial = true
+
+[[repos.hooks]]
+id = "ruff-check"
+name = "ruff check"
+entry = "uv run ruff check --fix --force-exclude"
+language = "system"
+types_or = ["python", "pyi"]
+require_serial = true
+
+[[repos.hooks]]
+id = "ty"
+name = "ty check"
+entry = "uv run ty check install.py platforms.py symlink.py tools.py update_shas.py tests"
+language = "system"
+types = ["python"]
+pass_filenames = false
+require_serial = true
+
+[[repos.hooks]]
+id = "pytest"
+name = "pytest"
+entry = "uv run pytest"
+language = "system"
+types = ["python"]
+pass_filenames = false
+require_serial = true

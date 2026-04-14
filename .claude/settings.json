@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run prek run --all-files",
+            "statusMessage": "Running prek"
+          }
+        ]
+      }
+    ]
+  }
+}

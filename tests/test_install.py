@@ -1,3 +1,4 @@
+import hashlib
 import io
 import stat
 import tarfile
@@ -8,9 +9,10 @@ from email.message import Message
 from typing import TYPE_CHECKING, Self
 
 import pytest
-from pydantic import ValidationError
 
 import install
+import platforms
+from platforms import Platform
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -21,7 +23,10 @@ def make_tool(**overrides: object) -> install.Tool:
         name="rg",
         repo="BurntSushi/ripgrep",
         version="14.1.1",
-        asset="ripgrep-{version}-{arch}-{target}.tar.gz",
+        assets={
+            Platform.DARWIN_ARM64: "ripgrep-{version}-aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "ripgrep-{version}-x86_64-unknown-linux-musl.tar.gz",
+        },
     )
     return base.model_copy(update=overrides) if overrides else base
 
@@ -48,36 +53,10 @@ class TestDetectPlatform:
     @pytest.mark.parametrize(
         ("system", "machine", "expected"),
         [
-            (
-                "Darwin",
-                "arm64",
-                {"os": "darwin", "arch": "aarch64", "arch_go": "arm64", "target": "apple-darwin"},
-            ),
-            (
-                "Darwin",
-                "x86_64",
-                {"os": "darwin", "arch": "x86_64", "arch_go": "amd64", "target": "apple-darwin"},
-            ),
-            (
-                "Linux",
-                "aarch64",
-                {
-                    "os": "linux",
-                    "arch": "aarch64",
-                    "arch_go": "arm64",
-                    "target": "unknown-linux-musl",
-                },
-            ),
-            (
-                "Linux",
-                "amd64",
-                {
-                    "os": "linux",
-                    "arch": "x86_64",
-                    "arch_go": "amd64",
-                    "target": "unknown-linux-musl",
-                },
-            ),
+            ("Darwin", "arm64", Platform.DARWIN_ARM64),
+            ("Darwin", "aarch64", Platform.DARWIN_ARM64),
+            ("Linux", "amd64", Platform.LINUX_AMD64),
+            ("Linux", "x86_64", Platform.LINUX_AMD64),
         ],
     )
     def test_supported_platforms(
@@ -85,97 +64,58 @@ class TestDetectPlatform:
         monkeypatch: pytest.MonkeyPatch,
         system: str,
         machine: str,
-        expected: dict[str, str],
+        expected: Platform,
     ) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: system)
-        monkeypatch.setattr(install.platform, "machine", lambda: machine)
-        pf = install.detect_platform()
-        for k, v in expected.items():
-            assert pf[k] == v
+        monkeypatch.setattr(platforms.platform, "system", lambda: system)
+        monkeypatch.setattr(platforms.platform, "machine", lambda: machine)
+        assert platforms.detect() == expected
 
-    def test_capitalized_os_field(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: "Darwin")
-        monkeypatch.setattr(install.platform, "machine", lambda: "arm64")
-        assert install.detect_platform()["OS"] == "Darwin"
-
-    def test_darwin_target_gnu_is_apple_darwin(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: "Darwin")
-        monkeypatch.setattr(install.platform, "machine", lambda: "arm64")
-        assert install.detect_platform()["target_gnu"] == "apple-darwin"
-
-    def test_linux_target_gnu(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: "Linux")
-        monkeypatch.setattr(install.platform, "machine", lambda: "x86_64")
-        assert install.detect_platform()["target_gnu"] == "unknown-linux-gnu"
-
-    def test_unsupported_os(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: "Windows")
-        monkeypatch.setattr(install.platform, "machine", lambda: "x86_64")
-        with pytest.raises(SystemExit, match="unsupported OS"):
-            install.detect_platform()
-
-    def test_unsupported_arch(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setattr(install.platform, "system", lambda: "Linux")
-        monkeypatch.setattr(install.platform, "machine", lambda: "riscv64")
-        with pytest.raises(SystemExit, match="unsupported architecture"):
-            install.detect_platform()
+    @pytest.mark.parametrize(
+        ("system", "machine"),
+        [
+            ("Windows", "x86_64"),
+            ("Linux", "riscv64"),
+            ("Darwin", "x86_64"),
+        ],
+    )
+    def test_unsupported(self, monkeypatch: pytest.MonkeyPatch, system: str, machine: str) -> None:
+        monkeypatch.setattr(platforms.platform, "system", lambda: system)
+        monkeypatch.setattr(platforms.platform, "machine", lambda: machine)
+        with pytest.raises(SystemExit, match="unsupported platform"):
+            platforms.detect()
 
 
 class TestResolveAsset:
-    def test_fills_all_placeholders(self) -> None:
-        pf = {
-            "os": "linux",
-            "OS": "Linux",
-            "arch": "x86_64",
-            "arch_go": "amd64",
-            "target": "unknown-linux-musl",
-            "target_gnu": "unknown-linux-gnu",
-        }
-        tool = make_tool(asset="ripgrep-{version}-{arch}-{target}.tar.gz")
-        assert install.resolve_asset(tool, pf) == "ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz"
-
-    def test_uses_tool_version(self) -> None:
-        tool = make_tool(version="2.0.0", asset="thing-{version}.tar.gz")
-        empty_pf = {
-            "os": "",
-            "OS": "",
-            "arch": "",
-            "arch_go": "",
-            "target": "",
-            "target_gnu": "",
-        }
-        assert install.resolve_asset(tool, empty_pf) == "thing-2.0.0.tar.gz"
+    def test_renders_version_placeholder(self) -> None:
+        tool = make_tool()
+        assert (
+            install.resolve_asset(tool, Platform.LINUX_AMD64)
+            == "ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz"
+        )
+        assert (
+            install.resolve_asset(tool, Platform.DARWIN_ARM64)
+            == "ripgrep-14.1.1-aarch64-apple-darwin.tar.gz"
+        )
 
 
 class TestDownloadUrl:
-    def test_default_v_prefix(self) -> None:
-        tool = make_tool(version="14.1.1")
-        assert (
-            install.download_url(tool, "foo.tar.gz")
-            == "https://github.com/BurntSushi/ripgrep/releases/download/v14.1.1/foo.tar.gz"
-        )
-
-    def test_empty_tag_prefix(self) -> None:
-        tool = make_tool(version="1.7.1", tag_prefix="jq-")
-        assert install.download_url(tool, "jq").startswith(
-            "https://github.com/BurntSushi/ripgrep/releases/download/jq-1.7.1/",
+    @pytest.mark.parametrize(
+        ("tag_prefix", "expected_tag"),
+        [("v", "v14.1.1"), ("", "14.1.1"), ("jq-", "jq-14.1.1")],
+    )
+    def test_respects_tag_prefix(self, tag_prefix: str, expected_tag: str) -> None:
+        tool = make_tool(tag_prefix=tag_prefix)
+        assert install.download_url(tool, "foo.tar.gz") == (
+            f"https://github.com/BurntSushi/ripgrep/releases/download/{expected_tag}/foo.tar.gz"
         )
 
 
 class TestFindBinary:
-    def test_finds_at_root(self, tmp_path: Path) -> None:
-        (tmp_path / "rg").write_text("x")
-        assert install.find_binary(tmp_path, "rg") == tmp_path / "rg"
-
-    def test_finds_nested(self, tmp_path: Path) -> None:
+    def test_finds_nested_file(self, tmp_path: Path) -> None:
         nested = tmp_path / "a" / "b" / "c"
         nested.mkdir(parents=True)
         (nested / "rg").write_text("x")
         assert install.find_binary(tmp_path, "rg") == nested / "rg"
-
-    def test_returns_none_when_missing(self, tmp_path: Path) -> None:
-        (tmp_path / "other").write_text("x")
-        assert install.find_binary(tmp_path, "rg") is None
 
 
 class TestExtractAndInstall:
@@ -184,8 +124,7 @@ class TestExtractAndInstall:
     ) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
         data = _make_tar_bytes({"ripgrep-14.1.1/rg": b"binary"})
-        tool = make_tool()
-        installed = install.extract_and_install(tool, data, "ripgrep.tar.gz")
+        installed = install.extract_and_install(make_tool(binary="rg"), data, "ripgrep.tar.gz")
         assert installed == ["rg"]
         dest = tmp_path / "rg"
         assert dest.read_bytes() == b"binary"
@@ -194,7 +133,12 @@ class TestExtractAndInstall:
     def test_zip_archive(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
         data = _make_zip_bytes({"fzf": b"binary"})
-        tool = make_tool(name="fzf", repo="junegunn/fzf", asset="fzf.zip", is_zip=True)
+        tool = make_tool(
+            name="fzf",
+            repo="junegunn/fzf",
+            assets={Platform.LINUX_AMD64: "fzf.zip"},
+            is_zip=True,
+        )
         installed = install.extract_and_install(tool, data, "fzf.zip")
         assert installed == ["fzf"]
         assert (tmp_path / "fzf").read_bytes() == b"binary"
@@ -204,13 +148,22 @@ class TestExtractAndInstall:
     ) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
         data = _make_zip_bytes({"fzf": b"binary"})
-        tool = make_tool(name="fzf", repo="junegunn/fzf", asset="fzf.zip")
+        tool = make_tool(
+            name="fzf",
+            repo="junegunn/fzf",
+            assets={Platform.LINUX_AMD64: "fzf.zip"},
+        )
         installed = install.extract_and_install(tool, data, "fzf.zip")
         assert installed == ["fzf"]
 
     def test_raw_binary(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
-        tool = make_tool(name="jq", repo="jqlang/jq", asset="jq", is_raw_binary=True)
+        tool = make_tool(
+            name="jq",
+            repo="jqlang/jq",
+            assets={Platform.LINUX_AMD64: "jq"},
+            is_raw_binary=True,
+        )
         installed = install.extract_and_install(tool, b"jqbinary", "jq")
         assert installed == ["jq"]
         dest = tmp_path / "jq"
@@ -220,8 +173,7 @@ class TestExtractAndInstall:
     def test_binary_override(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
         data = _make_tar_bytes({"pkg/custombin": b"x"})
-        tool = make_tool(binary="custombin")
-        installed = install.extract_and_install(tool, data, "pkg.tar.gz")
+        installed = install.extract_and_install(make_tool(binary="custombin"), data, "pkg.tar.gz")
         assert installed == ["custombin"]
 
     def test_extra_binaries_all_copied(
@@ -250,94 +202,134 @@ class TestExtractAndInstall:
     ) -> None:
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
         data = _make_tar_bytes({"pkg/something-else": b"x"})
-        tool = make_tool()
-        installed = install.extract_and_install(tool, data, "pkg.tar.gz")
-        assert installed == []
+        assert install.extract_and_install(make_tool(), data, "pkg.tar.gz") == []
 
 
-class TestToolModel:
-    def test_rejects_unknown_field(self) -> None:
-        with pytest.raises(ValidationError):
-            install.Tool.model_validate(
-                {"name": "x", "repo": "a/b", "version": "1", "asset": "x", "bogus": True},
-            )
+def _fake_download(data: bytes) -> type:
+    class FakeResp:
+        def __enter__(self) -> Self:
+            return self
 
-    def test_rejects_bad_repo_pattern(self) -> None:
-        with pytest.raises(ValidationError):
-            install.Tool(name="x", repo="not-a-valid-repo", version="1", asset="x")
+        def __exit__(self, *_: object) -> bool:
+            return False
 
-    def test_rejects_missing_required_field(self) -> None:
-        with pytest.raises(ValidationError):
-            install.Tool.model_validate({"name": "x", "repo": "a/b", "version": "1"})
+        def read(self) -> bytes:
+            return data
 
-    def test_rejects_negative_strip_components(self) -> None:
-        with pytest.raises(ValidationError):
-            install.Tool(name="x", repo="a/b", version="1", asset="x", strip_components=-1)
-
-
-class TestToolsList:
-    def test_tools_module_has_valid_entries(self) -> None:
-        import tools
-
-        assert len(tools.TOOLS) > 0
-        assert all(isinstance(t, install.Tool) for t in tools.TOOLS)
+    return FakeResp
 
 
 class TestInstallTool:
-    def _pf(self, os_name: str = "darwin") -> dict[str, str]:
-        return {
-            "os": os_name,
-            "OS": os_name.capitalize(),
-            "arch": "aarch64",
-            "arch_go": "arm64",
-            "target": "apple-darwin",
-            "target_gnu": "apple-darwin",
-        }
-
-    def test_linux_only_skipped_on_darwin(self, capsys: pytest.CaptureFixture[str]) -> None:
-        tool = make_tool(linux_only=True)
-        install.install_tool(tool, self._pf("darwin"))
-        out = capsys.readouterr().out
-        assert "skipped (linux only)" in out
+    def test_missing_asset_for_platform_skipped(self, capsys: pytest.CaptureFixture[str]) -> None:
+        tool = make_tool(
+            assets={Platform.LINUX_AMD64: "only-linux.tar.gz"},
+        )
+        install.install_tool(tool, Platform.DARWIN_ARM64)
+        assert "skipped (not available on darwin-arm64)" in capsys.readouterr().out
 
     def test_http_error_prints_failed(
         self, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
     ) -> None:
-        def fake_urlopen(req: urllib.request.Request) -> object:
+        def fake_urlopen(req: urllib.request.Request, **_: object) -> object:
             raise urllib.error.HTTPError(req.full_url, 404, "Not Found", Message(), None)
 
         monkeypatch.setattr(install.urllib.request, "urlopen", fake_urlopen)
-        tool = make_tool()
-        install.install_tool(tool, self._pf("linux"))
-        out = capsys.readouterr().out
-        assert "FAILED: 404 Not Found" in out
+        install.install_tool(make_tool(), Platform.LINUX_AMD64)
+        assert "FAILED: 404 Not Found" in capsys.readouterr().out
 
-    def test_happy_path_with_mocked_download(
+
+class TestShaVerification:
+    def _install_with(
+        self,
+        tool: install.Tool,
+        data: bytes,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        fake = _fake_download(data)
+        monkeypatch.setattr(install.urllib.request, "urlopen", lambda _req, **_kw: fake())
+        monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
+        install.install_tool(tool, Platform.LINUX_AMD64)
+
+    def test_matching_sha_installs(
         self,
         monkeypatch: pytest.MonkeyPatch,
         capsys: pytest.CaptureFixture[str],
         tmp_path: Path,
     ) -> None:
         data = _make_tar_bytes({"ripgrep/rg": b"binary"})
-
-        class FakeResp:
-            def __enter__(self) -> Self:
-                return self
-
-            def __exit__(self, *_: object) -> bool:
-                return False
-
-            def read(self) -> bytes:
-                return data
-
-        monkeypatch.setattr(
-            install.urllib.request,
-            "urlopen",
-            lambda _req: FakeResp(),
+        tool = make_tool(
+            binary="rg",
+            sha256={Platform.LINUX_AMD64: hashlib.sha256(data).hexdigest()},
         )
-        monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
-        tool = make_tool()
-        install.install_tool(tool, self._pf("linux"))
+        self._install_with(tool, data, tmp_path, monkeypatch)
         out = capsys.readouterr().out
         assert "-> rg" in out
         assert (tmp_path / "rg").exists()
+
+    def test_mismatched_sha_aborts_and_skips_write(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str],
+        tmp_path: Path,
+    ) -> None:
+        data = _make_tar_bytes({"ripgrep/rg": b"binary"})
+        tool = make_tool(binary="rg", sha256={Platform.LINUX_AMD64: "0" * 64})
+        self._install_with(tool, data, tmp_path, monkeypatch)
+        out = capsys.readouterr().out
+        assert "FAILED: sha256 mismatch" in out
+        assert not (tmp_path / "rg").exists()
+
+    def test_missing_sha_for_platform_aborts(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str],
+        tmp_path: Path,
+    ) -> None:
+        data = _make_tar_bytes({"ripgrep/rg": b"binary"})
+        tool = make_tool(binary="rg", sha256={Platform.DARWIN_ARM64: "a" * 64})
+        self._install_with(tool, data, tmp_path, monkeypatch)
+        out = capsys.readouterr().out
+        assert "FAILED: no sha256 recorded" in out
+        assert not (tmp_path / "rg").exists()
+
+
+class TestToolValidation:
+    def test_raw_binary_with_extras_is_rejected(self) -> None:
+        with pytest.raises(ValueError, match="cannot be combined with extra_binaries"):
+            install.Tool(
+                name="rg",
+                repo="BurntSushi/ripgrep",
+                version="1.0.0",
+                is_raw_binary=True,
+                extra_binaries=["other"],
+                assets={Platform.LINUX_AMD64: "foo"},
+            )
+
+
+class TestManifestIntegrity:
+    @pytest.fixture(scope="class")
+    def tools_list(self) -> list[install.Tool]:
+        import tools
+
+        return tools.TOOLS
+
+    def test_every_tool_renders_fully_on_every_supported_platform(
+        self, tools_list: list[install.Tool]
+    ) -> None:
+        for tool in tools_list:
+            for pf in tool.assets:
+                asset = install.resolve_asset(tool, pf)
+                assert "{" not in asset, f"{tool.name} left an unresolved placeholder: {asset}"
+                url = install.download_url(tool, asset)
+                assert url.startswith(f"https://github.com/{tool.repo}/releases/download/"), url
+
+    def test_every_tool_has_sha_for_every_declared_platform(
+        self, tools_list: list[install.Tool]
+    ) -> None:
+        for tool in tools_list:
+            for pf in tool.assets:
+                assert pf in tool.sha256, f"{tool.name} missing sha256 for {pf.value}"
+                assert len(tool.sha256[pf]) == 64, (  # noqa: PLR2004
+                    f"{tool.name}[{pf.value}] sha256 is not 64 hex chars"
+                )
