@@ -1,1 +1,7 @@
 fish/fish_variables
+
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/

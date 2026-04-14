@@ -1,14 +1,11 @@
-#!/usr/bin/env python3
 """Symlink dotfiles from this repository to their target locations."""
 
-from __future__ import annotations
-
-import os
 import shutil
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = Path(__file__).resolve().parent
 
 
 @dataclass
@@ -24,41 +21,41 @@ LINKS: list[Link] = [
 ]
 
 
-def resolve(link: Link) -> tuple[str, str]:
-    source = os.path.join(REPO_ROOT, link.source)
-    target = os.path.expanduser(link.target)
+def resolve(link: Link) -> tuple[Path, Path]:
+    source = REPO_ROOT / link.source
+    target = Path(link.target).expanduser()
     return source, target
 
 
-def apply_link(link: Link, dry_run: bool) -> None:
+def apply_link(link: Link, *, dry_run: bool) -> None:
     source, target = resolve(link)
     prefix = "[dry-run] " if dry_run else ""
     print(f"  {link.source} -> {link.target}")
 
-    if not os.path.exists(source):
+    if not source.exists():
         print(f"    ERROR: source missing: {source}")
         return
 
-    if os.path.islink(target) and os.readlink(target) == source:
+    if target.is_symlink() and target.readlink() == source:
         print("    ok (already linked)")
         return
 
-    parent = os.path.dirname(target)
-    existed = os.path.lexists(target)
+    parent = target.parent
+    existed = target.exists(follow_symlinks=False)
 
     if dry_run:
         if existed:
-            kind = "dir" if os.path.isdir(target) and not os.path.islink(target) else "file/symlink"
+            kind = "dir" if target.is_dir() and not target.is_symlink() else "file/symlink"
             print(f"    {prefix}would replace existing {kind}")
         else:
             print(f"    {prefix}would create")
         return
 
-    os.makedirs(parent, exist_ok=True)
+    parent.mkdir(parents=True, exist_ok=True)
 
     if existed:
-        if os.path.islink(target) or os.path.isfile(target):
-            os.unlink(target)
+        if target.is_symlink() or target.is_file():
+            target.unlink()
             action = "replaced existing file/symlink"
         else:
             shutil.rmtree(target)
@@ -66,7 +63,7 @@ def apply_link(link: Link, dry_run: bool) -> None:
     else:
         action = "created"
 
-    os.symlink(source, target)
+    target.symlink_to(source)
     print(f"    {action}")
 
 
@@ -79,7 +76,7 @@ def main() -> None:
     print(header + "\n")
 
     for link in LINKS:
-        apply_link(link, dry_run)
+        apply_link(link, dry_run=dry_run)
 
     print("\ndone.")
 
