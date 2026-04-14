@@ -1,0 +1,6 @@
+# updates
+auto-update = check
+auto-update-channel = tip
+
+# shell config
+command = /usr/local/bin/fish
