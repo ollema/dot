@@ -26,3 +26,18 @@ uv run ruff format
 uv run ty check install.py symlink.py tools.py tests
 uv run pytest
 ```
+
+## List of tools installed with Homebrew
+
+These are either:
+- not available as precompiled binaries for macos
+- not needed on the the linux systems
+- already installed on the linux systems
+
+```bash
+> brew leaves
+eza
+ffmpeg
+gh
+git-lfs
+```
