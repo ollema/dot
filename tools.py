@@ -39,18 +39,21 @@ class Tool(BaseModel):
 
 TOOLS: list[Tool] = [
     Tool(
-        name="ripgrep",
-        repo="BurntSushi/ripgrep",
-        version="15.1.0",
-        tag_prefix="",
-        binary="rg",
-        assets={
-            Platform.DARWIN_ARM64: "ripgrep-{version}-aarch64-apple-darwin.tar.gz",
-            Platform.LINUX_AMD64: "ripgrep-{version}-x86_64-unknown-linux-musl.tar.gz",
-        },
+        name="copilot",
+        repo="github/copilot-cli",
+        version="1.0.27",
+        assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.DARWIN_ARM64: "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715",
-            Platform.LINUX_AMD64: "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599",
+            Platform.LINUX_AMD64: "3a551c6dc8216041675132b53fdaeaf395e781eeed4c23dd02bd60d640d80722",
+        },
+    ),
+    Tool(
+        name="eza",
+        repo="eza-community/eza",
+        version="0.23.4",
+        assets={Platform.LINUX_AMD64: "eza_x86_64-unknown-linux-gnu.tar.gz"},
+        sha256={
+            Platform.LINUX_AMD64: "0c38665440226cd8bef5d1d4f3bc6ff77c927fb0d68b752739105db7ab5b358d"
         },
     ),
     Tool(
@@ -67,12 +70,15 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
-        name="eza",
-        repo="eza-community/eza",
-        version="0.23.4",
-        assets={Platform.LINUX_AMD64: "eza_x86_64-unknown-linux-gnu.tar.gz"},
+        name="fish",
+        repo="fish-shell/fish-shell",
+        version="4.6.0",
+        tag_prefix="",
+        extra_binaries=["fish_indent", "fish_key_reader"],
+        assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
+        symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "0c38665440226cd8bef5d1d4f3bc6ff77c927fb0d68b752739105db7ab5b358d"
+            Platform.LINUX_AMD64: "497c9c4e3fb3c006fe9d2c9a5a5447c1c90490b6b4ce6bfaf75e53b495c82f36"
         },
     ),
     Tool(
@@ -101,6 +107,21 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
+        name="ripgrep",
+        repo="BurntSushi/ripgrep",
+        version="15.1.0",
+        tag_prefix="",
+        binary="rg",
+        assets={
+            Platform.DARWIN_ARM64: "ripgrep-{version}-aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "ripgrep-{version}-x86_64-unknown-linux-musl.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715",
+            Platform.LINUX_AMD64: "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599",
+        },
+    ),
+    Tool(
         name="starship",
         repo="starship/starship",
         version="1.24.2",
@@ -112,18 +133,6 @@ TOOLS: list[Tool] = [
         sha256={
             Platform.DARWIN_ARM64: "d3a0da21374962625a2ee992110979bc1fa33424d7b6aea58a70405e26544fd9",
             Platform.LINUX_AMD64: "00ff3c1f8ffb59b5c15d4b44c076bcca04d92cf0055c86b916248c14f3ae714a",
-        },
-    ),
-    Tool(
-        name="fish",
-        repo="fish-shell/fish-shell",
-        version="4.6.0",
-        tag_prefix="",
-        extra_binaries=["fish_indent", "fish_key_reader"],
-        assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
-        symlinks=[Link(source="fish", target="~/.config/fish")],
-        sha256={
-            Platform.LINUX_AMD64: "497c9c4e3fb3c006fe9d2c9a5a5447c1c90490b6b4ce6bfaf75e53b495c82f36"
         },
     ),
 ]
