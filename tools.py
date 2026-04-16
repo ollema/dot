@@ -142,6 +142,7 @@ TOOLS: list[Tool] = [
             Platform.DARWIN_ARM64: "nvim-macos-arm64.tar.gz",
             Platform.LINUX_AMD64: "nvim-linux-x86_64.tar.gz",
         },
+        symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
             Platform.DARWIN_ARM64: "b77e01c5421ac1bac593eed5c2ea1b950439306dd4c32371ac2473792da9a9d5",
             Platform.LINUX_AMD64: "ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0",

@@ -4,6 +4,9 @@ end
 
 fish_add_path -g $HOME/.local/bin
 
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+
 if status is-interactive
     # disable the greeting message
     set -g fish_greeting
@@ -16,6 +19,9 @@ if status is-interactive
 
     # cat alias
     alias cat 'bat'
+
+    # vim alias
+    alias vim 'nvim'
 
     # git aliases
     abbr -a gs git status
