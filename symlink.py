@@ -10,6 +10,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 
 STANDALONE_LINKS: list[Link] = [
     Link(source="ghostty", target="~/.config/ghostty"),
+    Link(source="git/shared", target="~/.config/git/shared"),
 ]
 
 LINKS: list[Link] = [link for tool in TOOLS for link in tool.symlinks] + STANDALONE_LINKS
