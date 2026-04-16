@@ -1,0 +1,26 @@
+{
+  "skill_name": "add-tool",
+  "evals": [
+    {
+      "id": 1,
+      "name": "add-with-known-repo",
+      "prompt": "Add `bat` (sharkdp/bat) to ~/.dot/tools.py for both macOS and Linux.",
+      "expected_output": "Queries `gh api repos/sharkdp/bat/releases/latest`, picks `aarch64-apple-darwin` for darwin and `x86_64-unknown-linux-musl` for linux (preferring musl over gnu), templates the version into the asset names, HEAD-checks both URLs, inserts a `Tool(...)` block alphabetically before `copilot`, runs `uv run update_shas.py`, shows git diff. Does NOT write `sha256` by hand and does NOT include `tag_prefix=\"v\"` (default).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "add-linux-only-with-discovery",
+      "prompt": "Let's start managing the `dust` disk-usage tool — linux only.",
+      "expected_output": "Runs `gh search repos dust` to discover the canonical repo (bootandy/dust), confirms with the user, queries the latest release, picks only the LINUX_AMD64 asset, omits DARWIN_ARM64 from the assets dict, inserts the entry alphabetically, runs `uv run update_shas.py`.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "add-raw-binary",
+      "prompt": "Add `yq` from mikefarah/yq to my tools, both platforms.",
+      "expected_output": "Identifies that the release ships raw binaries (no archive extension), sets `is_raw_binary=True`, picks `yq_darwin_arm64` and `yq_linux_amd64` (or whatever the actual asset names are), does NOT set `extra_binaries` (model validator forbids the combination with raw binaries), inserts alphabetically, runs `uv run update_shas.py`.",
+      "files": []
+    }
+  ]
+}
