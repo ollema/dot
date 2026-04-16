@@ -39,12 +39,39 @@ class Tool(BaseModel):
 
 TOOLS: list[Tool] = [
     Tool(
+        name="bat",
+        repo="sharkdp/bat",
+        version="0.26.1",
+        assets={
+            Platform.DARWIN_ARM64: "bat-v{version}-aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "bat-v{version}-x86_64-unknown-linux-musl.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "e30beff26779c9bf60bb541e1d79046250cb74378f2757f8eb250afddb19e114",
+            Platform.LINUX_AMD64: "0dcd8ac79732c0d5b136f11f4ee00e581440e16a44eab5b3105b611bbf2cf191",
+        },
+    ),
+    Tool(
         name="copilot",
         repo="github/copilot-cli",
         version="1.0.28",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
             Platform.LINUX_AMD64: "353eeac118b44b027351810a1bfa4e096b7c940404e3ee55d447a4c5a4dedf52"
+        },
+    ),
+    Tool(
+        name="delta",
+        repo="dandavison/delta",
+        version="0.19.2",
+        tag_prefix="",
+        assets={
+            Platform.DARWIN_ARM64: "delta-{version}-aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "delta-{version}-x86_64-unknown-linux-musl.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "9be36612a5a13e9e386dc498fb8e50dc87c72ee42b63db0ea05b32f99a72a69a",
+            Platform.LINUX_AMD64: "f1ea01ca7728ce3462debc359f39dfc7cbbc1a63224b71fefabf92042864aa1b",
         },
     ),
     Tool(
