@@ -8,4 +8,4 @@
     line-numbers = true
     syntax-theme = "Visual Studio Dark+"
 [merge]
-    conflictstyle = zdiff3
+    conflictstyle = diff3
