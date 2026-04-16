@@ -1,0 +1,26 @@
+{
+  "skill_name": "update-tools",
+  "evals": [
+    {
+      "id": 1,
+      "name": "update-all-outdated",
+      "prompt": "Are any of the tools in ~/.dot/tools.py out of date? Update the ones that are.",
+      "expected_output": "Lists every tool's current vs latest via `gh api`, shows a diff table, confirms before editing, edits tools.py for each outdated entry, runs `uv run update_shas.py` to refresh hashes, shows git diff.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "bump-single-tool",
+      "prompt": "Bump fd to the latest version.",
+      "expected_output": "Queries `gh api repos/sharkdp/fd/releases/latest`, strips the `v` prefix, edits the fd version in tools.py, runs `uv run update_shas.py`, shows the diff.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "check-only",
+      "prompt": "What's the newest version of ripgrep available upstream, compared to what we have pinned?",
+      "expected_output": "Queries `gh api repos/BurntSushi/ripgrep/releases/latest`, reports current vs latest. Does NOT edit tools.py, does NOT run update_shas.py.",
+      "files": []
+    }
+  ]
+}
