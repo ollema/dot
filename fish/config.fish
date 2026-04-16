@@ -14,6 +14,9 @@ if status is-interactive
     abbr -a lla 'eza -la --git --group-directories-first'
     abbr -a lt 'eza --tree --level=2 --group-directories-first'
 
+    # cat alias
+    alias cat 'bat'
+
     # git aliases
     abbr -a gs git status
     abbr -a ga git add .
