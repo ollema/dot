@@ -61,6 +61,20 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
+        name="delta",
+        repo="dandavison/delta",
+        version="0.19.2",
+        tag_prefix="",
+        assets={
+            Platform.DARWIN_ARM64: "delta-{version}-aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "delta-{version}-x86_64-unknown-linux-musl.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "9be36612a5a13e9e386dc498fb8e50dc87c72ee42b63db0ea05b32f99a72a69a",
+            Platform.LINUX_AMD64: "f1ea01ca7728ce3462debc359f39dfc7cbbc1a63224b71fefabf92042864aa1b",
+        },
+    ),
+    Tool(
         name="eza",
         repo="eza-community/eza",
         version="0.23.4",
