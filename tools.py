@@ -134,6 +134,20 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
+        name="neovim",
+        repo="neovim/neovim",
+        version="0.12.1",
+        binary="nvim",
+        assets={
+            Platform.DARWIN_ARM64: "nvim-macos-arm64.tar.gz",
+            Platform.LINUX_AMD64: "nvim-linux-x86_64.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "b77e01c5421ac1bac593eed5c2ea1b950439306dd4c32371ac2473792da9a9d5",
+            Platform.LINUX_AMD64: "ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0",
+        },
+    ),
+    Tool(
         name="ripgrep",
         repo="BurntSushi/ripgrep",
         version="15.1.0",
