@@ -22,7 +22,6 @@ if status is-interactive
     abbr -a gac "git add .; git commit --amend --no-edit"
     abbr -a gp git push
     abbr -a gl git log --oneline --graph --decorate
-    abbr -a gd git diff
 
     # sane defaults
     abbr -a mkdir mkdir -p
@@ -34,6 +33,9 @@ if status is-interactive
 
     # load environment variables
     test -e {$HOME}/.env; and source {$HOME}/.env
+
+    # use close approximation of Dark Modern theme for bat
+    set -gx BAT_THEME "Visual Studio Dark+"
 
     # starship prompt
     starship init fish | source
