@@ -75,6 +75,9 @@ def extract_and_install(tool: Tool, data: bytes, asset_name: str) -> list[str]:
         dest.chmod(dest.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
         return [binary_name]
 
+    if tool.prefix_install:
+        return install_prefix(tool, data)
+
     with tempfile.TemporaryDirectory() as tmp:
         tmp_root = Path(tmp)
         if tool.is_zip or asset_name.endswith(".zip"):
@@ -92,6 +95,39 @@ def extract_and_install(tool: Tool, data: bytes, asset_name: str) -> list[str]:
                 installed.append(target)
 
     return installed
+
+
+def install_prefix(tool: Tool, data: bytes) -> list[str]:
+    # Tools like neovim ship binary + runtime siblings (share/, lib/); the binary
+    # resolves VIMRUNTIME via realpath(argv[0])/../share/nvim/runtime. Extract the
+    # whole distribution into INSTALL_DIR.parent so the relative layout survives.
+    target_root = INSTALL_DIR.parent
+    binaries = [tool.binary or tool.name, *tool.extra_binaries]
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        with tarfile.open(fileobj=io.BytesIO(data)) as tf:
+            tf.extractall(tmp_root, filter="data")
+        entries = list(tmp_root.iterdir())
+        if len(entries) != 1 or not entries[0].is_dir():
+            names = [e.name for e in entries]
+            msg = f"{tool.name}: expected single top-level dir in archive, got {names}"
+            raise RuntimeError(msg)
+        top = entries[0]
+
+        for item in top.iterdir():
+            dest = target_root / item.name
+            if item.name == "bin" and item.is_dir():
+                dest.mkdir(parents=True, exist_ok=True)
+                for src in item.iterdir():
+                    if src.is_file():
+                        atomic_install(src, dest / src.name)
+            elif item.is_dir():
+                shutil.copytree(item, dest, dirs_exist_ok=True)
+            else:
+                shutil.copy2(item, dest)
+
+    return [b for b in binaries if (target_root / "bin" / b).exists()]
 
 
 def atomic_install(src: Path, dest: Path) -> None:

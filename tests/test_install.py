@@ -215,6 +215,28 @@ class TestExtractAndInstall:
         data = _make_tar_bytes({"pkg/something-else": b"x"})
         assert install.extract_and_install(make_tool(), data, "pkg.tar.gz") == []
 
+    def test_prefix_install_extracts_full_tree(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        install_dir = tmp_path / "bin"
+        install_dir.mkdir()
+        monkeypatch.setattr(install, "INSTALL_DIR", install_dir)
+        data = _make_tar_bytes(
+            {
+                "nvim-linux-x86_64/bin/nvim": b"binary",
+                "nvim-linux-x86_64/share/nvim/runtime/syntax.vim": b"syntax",
+                "nvim-linux-x86_64/lib/nvim/parser/c.so": b"parser",
+            },
+        )
+        tool = make_tool(name="neovim", repo="neovim/neovim", binary="nvim", prefix_install=True)
+        installed = install.extract_and_install(tool, data, "nvim-linux-x86_64.tar.gz")
+        assert installed == ["nvim"]
+        nvim = install_dir / "nvim"
+        assert nvim.read_bytes() == b"binary"
+        assert nvim.stat().st_mode & stat.S_IXUSR
+        assert (tmp_path / "share" / "nvim" / "runtime" / "syntax.vim").read_bytes() == b"syntax"
+        assert (tmp_path / "lib" / "nvim" / "parser" / "c.so").read_bytes() == b"parser"
+
 
 def _fake_download(data: bytes) -> type:
     class FakeResp:
@@ -316,6 +338,17 @@ class TestToolValidation:
                 version="1.0.0",
                 is_raw_binary=True,
                 extra_binaries=["other"],
+                assets={Platform.LINUX_AMD64: "foo"},
+            )
+
+    def test_raw_binary_and_prefix_install_are_mutually_exclusive(self) -> None:
+        with pytest.raises(ValueError, match="mutually exclusive"):
+            install.Tool(
+                name="rg",
+                repo="BurntSushi/ripgrep",
+                version="1.0.0",
+                is_raw_binary=True,
+                prefix_install=True,
                 assets={Platform.LINUX_AMD64: "foo"},
             )
 

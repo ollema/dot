@@ -25,14 +25,18 @@ class Tool(BaseModel):
     extra_binaries: list[str] = Field(default_factory=list)
     is_zip: bool = False
     is_raw_binary: bool = False
+    prefix_install: bool = False
     assets: dict[Platform, str]
     sha256: dict[Platform, str] = Field(default_factory=dict)
     symlinks: list[Link] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def _reject_raw_with_extras(self) -> Self:
+    def _reject_incompatible_flags(self) -> Self:
         if self.is_raw_binary and self.extra_binaries:
             msg = f"{self.name}: is_raw_binary cannot be combined with extra_binaries"
+            raise ValueError(msg)
+        if self.is_raw_binary and self.prefix_install:
+            msg = f"{self.name}: is_raw_binary and prefix_install are mutually exclusive"
             raise ValueError(msg)
         return self
 
@@ -139,6 +143,7 @@ TOOLS: list[Tool] = [
         repo="neovim/neovim",
         version="0.12.1",
         binary="nvim",
+        prefix_install=True,
         assets={
             Platform.DARWIN_ARM64: "nvim-macos-arm64.tar.gz",
             Platform.LINUX_AMD64: "nvim-linux-x86_64.tar.gz",
