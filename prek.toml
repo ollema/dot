@@ -20,7 +20,7 @@ require_serial = true
 [[repos.hooks]]
 id = "ty"
 name = "ty check"
-entry = "uv run ty check install.py platforms.py symlink.py tools.py update_shas.py tests"
+entry = "uv run ty check install.py platforms.py symlink.py tools.py ui.py update_shas.py tests"
 language = "system"
 types = ["python"]
 pass_filenames = false
