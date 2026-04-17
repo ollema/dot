@@ -6,5 +6,5 @@ auto-update-channel = tip
 command = /usr/local/bin/fish
 
 # theming
-theme = Rose Pine
+theme = Everforest Dark Hard
 font-family = CaskaydiaCove Nerd Font Mono

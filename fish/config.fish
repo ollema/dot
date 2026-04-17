@@ -44,8 +44,8 @@ if status is-interactive
     # load environment variables
     test -e {$HOME}/.env; and source {$HOME}/.env
 
-    # use Rosé Pine theme for fish
-    fish_config theme choose "Rosé Pine"
+    # use Everforest Dark Hard theme for fish
+    fish_config theme choose "Everforest Dark Hard"
 
     # starship prompt
     starship init fish | source

@@ -13,35 +13,36 @@ $line_break\
 $python\
 $character"""
 
-palette = "rose_pine"
+palette = "everforest"
 
-# Palette values kept in sync with fish/themes/Rosé Pine.theme (main variant)
-[palettes.rose_pine]
-base = "#191724"
-subtle = "#908caa"
-text = "#e0def4"
-love = "#eb6f92"
-gold = "#f6c177"
-rose = "#ebbcba"
-pine = "#31748f"
-foam = "#9ccfd8"
-iris = "#c4a7e7"
+# Palette values kept in sync with fish/themes/Everforest Dark Hard.theme
+[palettes.everforest]
+bg = "#272e33"
+fg = "#d3c6aa"
+grey = "#859289"
+red = "#e67e80"
+orange = "#e69875"
+yellow = "#dbbc7f"
+green = "#a7c080"
+aqua = "#83c092"
+blue = "#7fbbb3"
+purple = "#d699b6"
 
 [directory]
-style = "foam"
+style = "aqua"
 
 [character]
-success_symbol = "[❯](iris)"
-error_symbol = "[❯](love)"
-vimcmd_symbol = "[❮](pine)"
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](blue)"
 
 [git_branch]
 format = "[$branch]($style)"
-style = "subtle"
+style = "grey"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](rose) ($ahead_behind$stashed)]($style)"
-style = "foam"
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](orange) ($ahead_behind$stashed)]($style)"
+style = "aqua"
 conflicted = "​"
 untracked = "​"
 modified = "​"
@@ -52,14 +53,14 @@ stashed = "≡"
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "subtle"
+style = "grey"
 
 [cmd_duration]
 format = "[$duration]($style) "
-style = "gold"
+style = "yellow"
 
 [python]
 format = "[$virtualenv]($style) "
-style = "subtle"
+style = "grey"
 detect_extensions = []
 detect_files = []

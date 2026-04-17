@@ -144,6 +144,9 @@ later(function() add({ 'https://github.com/rafamadriz/friendly-snippets' }) end)
 
 
 Config.now(function()
-  add({{ src = 'https://github.com/rose-pine/neovim', name = 'rose-pine' }})
-  vim.cmd('color rose-pine')
+  add({{ src = 'https://github.com/sainnhe/everforest', name = 'everforest' }})
+  vim.o.background = 'dark'
+  vim.g.everforest_background = 'hard'
+  vim.g.everforest_better_performance = 1
+  vim.cmd('color everforest')
 end)

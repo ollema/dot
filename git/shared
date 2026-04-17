@@ -7,35 +7,35 @@
     side-by-side = true
     line-numbers = true
     dark = true
-    syntax-theme = Rose-Pine
+    syntax-theme = Everforest-Dark-Hard
 
-    file-style = "#e0def4"
-    file-decoration-style = "#6e6a86"
+    file-style = "#d3c6aa"
+    file-decoration-style = "#7a8478"
 
     hunk-header-style = file line-number syntax
     hunk-header-file-style = bold
-    hunk-header-line-number-style = bold "#908caa"
-    hunk-header-decoration-style = "#6e6a86" box ul
+    hunk-header-line-number-style = bold "#859289"
+    hunk-header-decoration-style = "#7a8478" box ul
 
-    commit-decoration-style = "#6e6a86" bold box ul
+    commit-decoration-style = "#7a8478" bold box ul
 
-    line-numbers-minus-style = bold "#eb6f92"
-    line-numbers-plus-style  = bold "#9ccfd8"
-    line-numbers-zero-style  = "#6e6a86"
-    line-numbers-left-style  = "#6e6a86"
-    line-numbers-right-style = "#6e6a86"
+    line-numbers-minus-style = bold "#e67e80"
+    line-numbers-plus-style  = bold "#a7c080"
+    line-numbers-zero-style  = "#7a8478"
+    line-numbers-left-style  = "#7a8478"
+    line-numbers-right-style = "#7a8478"
 
-    minus-style      = syntax "#412839"
-    minus-emph-style = bold syntax "#69394e"
-    plus-style       = syntax "#323b47"
-    plus-emph-style  = bold syntax "#71929c"
+    minus-style      = syntax "#493b40"
+    minus-emph-style = bold syntax "#5c4449"
+    plus-style       = syntax "#3c4841"
+    plus-emph-style  = bold syntax "#4e5c4b"
 
-    blame-palette = "#191724 #1f1d2e #26233a #6e6a86 #908caa"
+    blame-palette = "#272e33 #2e383c #374145 #7a8478 #859289"
 
     map-styles = \
-        bold purple => syntax "#c4a7e7", \
-        bold blue   => syntax "#31748f", \
-        bold cyan   => syntax "#9ccfd8", \
-        bold yellow => syntax "#f6c177"
+        bold purple => syntax "#d699b6", \
+        bold blue   => syntax "#7fbbb3", \
+        bold cyan   => syntax "#83c092", \
+        bold yellow => syntax "#dbbc7f"
 [merge]
     conflictstyle = diff3
