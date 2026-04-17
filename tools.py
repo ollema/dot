@@ -183,4 +183,18 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "00ff3c1f8ffb59b5c15d4b44c076bcca04d92cf0055c86b916248c14f3ae714a",
         },
     ),
+    Tool(
+        name="tree-sitter",
+        repo="tree-sitter/tree-sitter",
+        version="0.26.8",
+        is_zip=True,
+        assets={
+            Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
+            Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "9dc0dc3415a1cd30499750579defbf3f8e000a98f12a65cda8e25981f07e7b0f",
+            Platform.LINUX_AMD64: "9377d83479ee8e05dce7d2b51442087c7fdd620015834c24fea1a86d4bd0a85b",
+        },
+    ),
 ]
