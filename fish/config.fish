@@ -43,8 +43,8 @@ if status is-interactive
     # load environment variables
     test -e {$HOME}/.env; and source {$HOME}/.env
 
-    # use close approximation of Dark Modern theme for bat
-    set -gx BAT_THEME "Visual Studio Dark+"
+    # use Rosé Pine theme for fish
+    fish_config theme choose "Rosé Pine"
 
     # starship prompt
     starship init fish | source
