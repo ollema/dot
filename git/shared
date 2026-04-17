@@ -6,6 +6,36 @@
     navigate = true
     side-by-side = true
     line-numbers = true
-    syntax-theme = "Visual Studio Dark+"
+    dark = true
+    syntax-theme = Rose-Pine
+
+    file-style = "#e0def4"
+    file-decoration-style = "#6e6a86"
+
+    hunk-header-style = file line-number syntax
+    hunk-header-file-style = bold
+    hunk-header-line-number-style = bold "#908caa"
+    hunk-header-decoration-style = "#6e6a86" box ul
+
+    commit-decoration-style = "#6e6a86" bold box ul
+
+    line-numbers-minus-style = bold "#eb6f92"
+    line-numbers-plus-style  = bold "#9ccfd8"
+    line-numbers-zero-style  = "#6e6a86"
+    line-numbers-left-style  = "#6e6a86"
+    line-numbers-right-style = "#6e6a86"
+
+    minus-style      = syntax "#412839"
+    minus-emph-style = bold syntax "#69394e"
+    plus-style       = syntax "#323b47"
+    plus-emph-style  = bold syntax "#71929c"
+
+    blame-palette = "#191724 #1f1d2e #26233a #6e6a86 #908caa"
+
+    map-styles = \
+        bold purple => syntax "#c4a7e7", \
+        bold blue   => syntax "#31748f", \
+        bold cyan   => syntax "#9ccfd8", \
+        bold yellow => syntax "#f6c177"
 [merge]
     conflictstyle = diff3

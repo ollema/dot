@@ -46,6 +46,7 @@ TOOLS: list[Tool] = [
             Platform.DARWIN_ARM64: "bat-v{version}-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "bat-v{version}-x86_64-unknown-linux-musl.tar.gz",
         },
+        symlinks=[Link(source="bat", target="~/.config/bat")],
         sha256={
             Platform.DARWIN_ARM64: "e30beff26779c9bf60bb541e1d79046250cb74378f2757f8eb250afddb19e114",
             Platform.LINUX_AMD64: "0dcd8ac79732c0d5b136f11f4ee00e581440e16a44eab5b3105b611bbf2cf191",
