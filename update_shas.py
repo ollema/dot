@@ -6,29 +6,60 @@ import hashlib
 import shutil
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from install import download, download_url
+from rich.table import Table
+
+from install import download_streaming, download_url
 from tools import TOOLS
+from ui import console, install_tracebacks, make_progress
 
 if TYPE_CHECKING:
+    from rich.progress import TaskID
+
     from platforms import Platform
 
 TOOLS_PY = Path(__file__).resolve().parent / "tools.py"
+MAX_WORKERS = 8
 
 
 def collect_shas() -> dict[str, dict[Platform, str]]:
-    result: dict[str, dict[Platform, str]] = {}
+    jobs: list[tuple[str, Platform, str, str]] = []
     for tool in TOOLS:
-        entries: dict[Platform, str] = {}
         for pf, template in tool.assets.items():
             asset = template.format(version=tool.version)
-            url = download_url(tool, asset)
-            print(f"  {tool.name:10s} {pf.value:14s} {asset}")
-            data = download(url)
-            entries[pf] = hashlib.sha256(data).hexdigest()
-        result[tool.name] = entries
+            jobs.append((tool.name, pf, asset, download_url(tool, asset)))
+
+    shas: dict[tuple[str, Platform], str] = {}
+
+    with make_progress() as progress:
+        overall = progress.add_task("all assets", total=len(jobs))
+        task_ids: dict[tuple[str, Platform], TaskID] = {
+            (name, pf): progress.add_task(f"{name} · {pf.value}", total=None)
+            for name, pf, _, _ in jobs
+        }
+
+        def fetch(name: str, pf: Platform, url: str) -> tuple[str, Platform, str]:
+            tid = task_ids[(name, pf)]
+
+            def advance(n: int, total: int) -> None:
+                progress.update(tid, total=total or None, advance=n)
+
+            data = download_streaming(url, advance)
+            return name, pf, hashlib.sha256(data).hexdigest()
+
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+            futures = [pool.submit(fetch, name, pf, url) for name, pf, _, url in jobs]
+            for fut in as_completed(futures):
+                name, pf, sha = fut.result()
+                shas[(name, pf)] = sha
+                progress.advance(overall)
+
+    result: dict[str, dict[Platform, str]] = {tool.name: {} for tool in TOOLS}
+    for name, pf, _, _ in jobs:
+        result[name][pf] = shas[(name, pf)]
     return result
 
 
@@ -85,18 +116,40 @@ def rewrite_manifest(shas_by_tool: dict[str, dict[Platform, str]]) -> None:
     TOOLS_PY.write_text(rewritten)
 
 
-def main() -> None:
-    print("fetching release assets and computing sha256 for each supported platform:\n")
+def render_summary(shas_by_tool: dict[str, dict[Platform, str]]) -> Table:
+    table = Table(title="sha256", title_justify="left")
+    table.add_column("tool", style="bold")
+    table.add_column("platform")
+    table.add_column("sha256", style="dim")
+    for name in sorted(shas_by_tool):
+        for pf, sha in shas_by_tool[name].items():
+            table.add_row(name, pf.value, sha[:16] + "…")
+    return table
+
+
+def main() -> int:
+    install_tracebacks()
+    console.rule("[bold]update-shas[/]")
+
     shas = collect_shas()
-    print("\nrewriting tools.py...")
-    rewrite_manifest(shas)
-    print("running ruff format...")
+
+    with console.status("[bold]rewriting tools.py..."):
+        rewrite_manifest(shas)
+
     uv = shutil.which("uv")
     if uv is None:
         msg = "uv not found on PATH"
         raise RuntimeError(msg)
-    subprocess.run([uv, "run", "ruff", "format", str(TOOLS_PY)], check=True)  # noqa: S603
-    print("done.")
+    with console.status("[bold]running ruff format..."):
+        subprocess.run(  # noqa: S603
+            [uv, "run", "ruff", "format", str(TOOLS_PY)],
+            check=True,
+            capture_output=True,
+        )
+
+    console.print(render_summary(shas))
+    console.print("[green]done.[/]")
+    return 0
 
 
 if __name__ == "__main__":

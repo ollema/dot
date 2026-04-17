@@ -9,6 +9,7 @@ from email.message import Message
 from typing import TYPE_CHECKING, Self
 
 import pytest
+from rich.progress import TaskID
 
 import install
 import platforms
@@ -16,6 +17,16 @@ from platforms import Platform
 
 if TYPE_CHECKING:
     from pathlib import Path
+    from typing import ClassVar
+
+
+class _FakeProgress:
+    def update(self, *_args: object, **_kwargs: object) -> None: ...
+    def remove_task(self, *_args: object, **_kwargs: object) -> None: ...
+
+
+_FAKE_PROGRESS = _FakeProgress()
+_FAKE_TASK_ID = TaskID(0)
 
 
 def make_tool(**overrides: object) -> install.Tool:
@@ -207,35 +218,40 @@ class TestExtractAndInstall:
 
 def _fake_download(data: bytes) -> type:
     class FakeResp:
+        headers: ClassVar[dict[str, str]] = {"Content-Length": str(len(data))}
+
         def __enter__(self) -> Self:
+            self._stream = io.BytesIO(data)
             return self
 
         def __exit__(self, *_: object) -> bool:
             return False
 
-        def read(self) -> bytes:
-            return data
+        def read(self, size: int = -1) -> bytes:
+            return self._stream.read(size)
 
     return FakeResp
 
 
 class TestInstallTool:
-    def test_missing_asset_for_platform_skipped(self, capsys: pytest.CaptureFixture[str]) -> None:
+    def test_missing_asset_for_platform_skipped(self) -> None:
         tool = make_tool(
             assets={Platform.LINUX_AMD64: "only-linux.tar.gz"},
         )
-        install.install_tool(tool, Platform.DARWIN_ARM64)
-        assert "skipped (not available on darwin-arm64)" in capsys.readouterr().out
+        result = install.install_tool(tool, Platform.DARWIN_ARM64, _FAKE_PROGRESS, _FAKE_TASK_ID)
+        assert result.state == "skip"
+        assert "not available on darwin-arm64" in result.detail
 
-    def test_http_error_prints_failed(
-        self, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_http_error_prints_failed(self, monkeypatch: pytest.MonkeyPatch) -> None:
         def fake_urlopen(req: urllib.request.Request, **_: object) -> object:
             raise urllib.error.HTTPError(req.full_url, 404, "Not Found", Message(), None)
 
         monkeypatch.setattr(install.urllib.request, "urlopen", fake_urlopen)
-        install.install_tool(make_tool(), Platform.LINUX_AMD64)
-        assert "FAILED: 404 Not Found" in capsys.readouterr().out
+        result = install.install_tool(
+            make_tool(), Platform.LINUX_AMD64, _FAKE_PROGRESS, _FAKE_TASK_ID
+        )
+        assert result.state == "fail"
+        assert "404 Not Found" in result.detail
 
 
 class TestShaVerification:
@@ -245,16 +261,15 @@ class TestShaVerification:
         data: bytes,
         tmp_path: Path,
         monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
+    ) -> install.Result:
         fake = _fake_download(data)
         monkeypatch.setattr(install.urllib.request, "urlopen", lambda _req, **_kw: fake())
         monkeypatch.setattr(install, "INSTALL_DIR", tmp_path)
-        install.install_tool(tool, Platform.LINUX_AMD64)
+        return install.install_tool(tool, Platform.LINUX_AMD64, _FAKE_PROGRESS, _FAKE_TASK_ID)
 
     def test_matching_sha_installs(
         self,
         monkeypatch: pytest.MonkeyPatch,
-        capsys: pytest.CaptureFixture[str],
         tmp_path: Path,
     ) -> None:
         data = _make_tar_bytes({"ripgrep/rg": b"binary"})
@@ -262,35 +277,33 @@ class TestShaVerification:
             binary="rg",
             sha256={Platform.LINUX_AMD64: hashlib.sha256(data).hexdigest()},
         )
-        self._install_with(tool, data, tmp_path, monkeypatch)
-        out = capsys.readouterr().out
-        assert "-> rg" in out
+        result = self._install_with(tool, data, tmp_path, monkeypatch)
+        assert result.state == "ok"
+        assert result.detail == "rg"
         assert (tmp_path / "rg").exists()
 
     def test_mismatched_sha_aborts_and_skips_write(
         self,
         monkeypatch: pytest.MonkeyPatch,
-        capsys: pytest.CaptureFixture[str],
         tmp_path: Path,
     ) -> None:
         data = _make_tar_bytes({"ripgrep/rg": b"binary"})
         tool = make_tool(binary="rg", sha256={Platform.LINUX_AMD64: "0" * 64})
-        self._install_with(tool, data, tmp_path, monkeypatch)
-        out = capsys.readouterr().out
-        assert "FAILED: sha256 mismatch" in out
+        result = self._install_with(tool, data, tmp_path, monkeypatch)
+        assert result.state == "fail"
+        assert "sha256 mismatch" in result.detail
         assert not (tmp_path / "rg").exists()
 
     def test_missing_sha_for_platform_aborts(
         self,
         monkeypatch: pytest.MonkeyPatch,
-        capsys: pytest.CaptureFixture[str],
         tmp_path: Path,
     ) -> None:
         data = _make_tar_bytes({"ripgrep/rg": b"binary"})
         tool = make_tool(binary="rg", sha256={Platform.DARWIN_ARM64: "a" * 64})
-        self._install_with(tool, data, tmp_path, monkeypatch)
-        out = capsys.readouterr().out
-        assert "FAILED: no sha256 recorded" in out
+        result = self._install_with(tool, data, tmp_path, monkeypatch)
+        assert result.state == "fail"
+        assert "no sha256 recorded" in result.detail
         assert not (tmp_path / "rg").exists()
 
 
