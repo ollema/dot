@@ -6,6 +6,7 @@ fish_add_path -g $HOME/.local/bin
 
 set -gx EDITOR nvim
 set -gx VISUAL nvim
+set -gx COLORTERM truecolor
 
 if status is-interactive
     # disable the greeting message
