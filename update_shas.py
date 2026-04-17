@@ -1,65 +1,58 @@
-"""Download every release asset referenced by tools.py, hash it, and write
-the results back into the TOOLS manifest. Run whenever a tool's version changes."""
+"""Pull sha256 digests from GitHub's release API and write them into the
+TOOLS manifest. Run whenever a tool's version changes."""
 
 import ast
-import hashlib
+import json
 import shutil
 import subprocess
 import sys
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from rich.table import Table
 
-from install import download_streaming, download_url
 from tools import TOOLS
-from ui import console, install_tracebacks, make_progress
+from ui import console, install_tracebacks
 
 if TYPE_CHECKING:
-    from rich.progress import TaskID
-
     from platforms import Platform
 
 TOOLS_PY = Path(__file__).resolve().parent / "tools.py"
-MAX_WORKERS = 8
 
 
-def collect_shas() -> dict[str, dict[Platform, str]]:
-    jobs: list[tuple[str, Platform, str, str]] = []
-    for tool in TOOLS:
-        for pf, template in tool.assets.items():
-            asset = template.format(version=tool.version)
-            jobs.append((tool.name, pf, asset, download_url(tool, asset)))
+def gh_release_digests(gh: str, repo: str, tag: str) -> dict[str, str]:
+    proc = subprocess.run(  # noqa: S603
+        [gh, "api", f"repos/{repo}/releases/tags/{tag}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    payload = json.loads(proc.stdout)
+    digests: dict[str, str] = {}
+    for asset in payload["assets"]:
+        digest = asset.get("digest") or ""
+        prefix, _, hexdigest = digest.partition(":")
+        if prefix == "sha256" and hexdigest:
+            digests[asset["name"]] = hexdigest
+    return digests
 
-    shas: dict[tuple[str, Platform], str] = {}
 
-    with make_progress() as progress:
-        overall = progress.add_task("all assets", total=len(jobs))
-        task_ids: dict[tuple[str, Platform], TaskID] = {
-            (name, pf): progress.add_task(f"{name} · {pf.value}", total=None)
-            for name, pf, _, _ in jobs
-        }
-
-        def fetch(name: str, pf: Platform, url: str) -> tuple[str, Platform, str]:
-            tid = task_ids[(name, pf)]
-
-            def advance(n: int, total: int) -> None:
-                progress.update(tid, total=total or None, advance=n)
-
-            data = download_streaming(url, advance)
-            return name, pf, hashlib.sha256(data).hexdigest()
-
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-            futures = [pool.submit(fetch, name, pf, url) for name, pf, _, url in jobs]
-            for fut in as_completed(futures):
-                name, pf, sha = fut.result()
-                shas[(name, pf)] = sha
-                progress.advance(overall)
-
-    result: dict[str, dict[Platform, str]] = {tool.name: {} for tool in TOOLS}
-    for name, pf, _, _ in jobs:
-        result[name][pf] = shas[(name, pf)]
+def collect_shas(gh: str) -> dict[str, dict[Platform, str]]:
+    result: dict[str, dict[Platform, str]] = {}
+    with console.status("[bold]fetching digests...") as status:
+        for tool in TOOLS:
+            tag = f"{tool.tag_prefix}{tool.version}"
+            status.update(f"[bold]{tool.name}[/] · {tag}")
+            digests = gh_release_digests(gh, tool.repo, tag)
+            shas: dict[Platform, str] = {}
+            for pf, template in tool.assets.items():
+                asset_name = template.format(version=tool.version)
+                sha = digests.get(asset_name)
+                if sha is None:
+                    msg = f"{tool.name}: no sha256 for {asset_name} in {tool.repo}@{tag}"
+                    raise RuntimeError(msg)
+                shas[pf] = sha
+            result[tool.name] = shas
     return result
 
 
@@ -131,15 +124,20 @@ def main() -> int:
     install_tracebacks()
     console.rule("[bold]update-shas[/]")
 
-    shas = collect_shas()
-
-    with console.status("[bold]rewriting tools.py..."):
-        rewrite_manifest(shas)
-
+    gh = shutil.which("gh")
+    if gh is None:
+        msg = "gh not found on PATH"
+        raise RuntimeError(msg)
     uv = shutil.which("uv")
     if uv is None:
         msg = "uv not found on PATH"
         raise RuntimeError(msg)
+
+    shas = collect_shas(gh)
+
+    with console.status("[bold]rewriting tools.py..."):
+        rewrite_manifest(shas)
+
     with console.status("[bold]running ruff format..."):
         subprocess.run(  # noqa: S603
             [uv, "run", "ruff", "format", str(TOOLS_PY)],
