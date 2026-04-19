@@ -1,0 +1,21 @@
+Host hal sindre teamserver
+    User s0001325
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host hal sindre
+    ServerAliveInterval 30
+
+Host hal
+    HostName hal-login01.dli.int.autoheim.net
+
+Host sindre
+    HostName login.sin.autoheim.net
+
+Host teamserver
+    HostName vm002558.int.autoheim.net
+    RequestTTY yes
+
+Host *
+    HashKnownHosts yes
+    PreferredAuthentications publickey
