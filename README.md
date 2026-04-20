@@ -36,6 +36,7 @@ These are either:
 
 ```bash
 > brew leaves
+autossh
 eza
 ffmpeg
 gh

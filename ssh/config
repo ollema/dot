@@ -1,4 +1,4 @@
-Host hal sindre teamserver
+Host hal sindre teamserver t.*
     User s0001325
     IdentityFile ~/.ssh/id_ed25519
     IdentitiesOnly yes
@@ -15,6 +15,15 @@ Host sindre
 Host teamserver
     HostName vm002558.int.autoheim.net
     RequestTTY yes
+
+Host t.*
+    HostName vm002558.int.autoheim.net
+    RequestTTY yes
+    RemoteCommand zmx attach %k
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 10m
+    ServerAliveInterval 30
 
 Host *
     HashKnownHosts yes

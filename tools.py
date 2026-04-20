@@ -29,6 +29,10 @@ class Tool(BaseModel):
     assets: dict[Platform, str]
     sha256: dict[Platform, str] = Field(default_factory=dict)
     symlinks: list[Link] = Field(default_factory=list)
+    # Override for projects that publish binaries outside GitHub releases. When
+    # set, {version} and {asset} are substituted; install + update_shas fetch
+    # from here instead of github.com/{repo}/releases/download/...
+    url_template: str | None = None
 
     @model_validator(mode="after")
     def _reject_incompatible_flags(self) -> Self:
@@ -195,6 +199,20 @@ TOOLS: list[Tool] = [
         sha256={
             Platform.DARWIN_ARM64: "9dc0dc3415a1cd30499750579defbf3f8e000a98f12a65cda8e25981f07e7b0f",
             Platform.LINUX_AMD64: "9377d83479ee8e05dce7d2b51442087c7fdd620015834c24fea1a86d4bd0a85b",
+        },
+    ),
+    Tool(
+        name="zmx",
+        repo="neurosnap/zmx",
+        version="0.5.0",
+        url_template="https://zmx.sh/a/{asset}",
+        assets={
+            Platform.DARWIN_ARM64: "zmx-{version}-macos-aarch64.tar.gz",
+            Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "3b9379f0ff0cf107f7f87048d2c45f6fbeabed588d676ad86ac218bed928d107",
+            Platform.LINUX_AMD64: "4cc1f6b854dccdcabae4cb91bd0379a23e6f8210048af5d81e0661e594a50c28",
         },
     ),
 ]

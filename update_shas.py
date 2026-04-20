@@ -2,16 +2,18 @@
 TOOLS manifest. Run whenever a tool's version changes."""
 
 import ast
+import hashlib
 import json
 import shutil
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from rich.table import Table
 
-from tools import TOOLS
+from tools import TOOLS, Tool
 from ui import console, install_tracebacks
 
 if TYPE_CHECKING:
@@ -37,12 +39,30 @@ def gh_release_digests(gh: str, repo: str, tag: str) -> dict[str, str]:
     return digests
 
 
+def download_and_hash(tool: Tool) -> dict[Platform, str]:
+    url_template = tool.url_template
+    if url_template is None:
+        msg = f"{tool.name}: download_and_hash requires url_template"
+        raise ValueError(msg)
+    shas: dict[Platform, str] = {}
+    for pf, template in tool.assets.items():
+        asset_name = template.format(version=tool.version)
+        url = url_template.format(version=tool.version, asset=asset_name)
+        req = urllib.request.Request(url, headers={"User-Agent": "update_shas.py"})  # noqa: S310
+        with urllib.request.urlopen(req, timeout=60) as resp:  # noqa: S310
+            shas[pf] = hashlib.sha256(resp.read()).hexdigest()
+    return shas
+
+
 def collect_shas(gh: str) -> dict[str, dict[Platform, str]]:
     result: dict[str, dict[Platform, str]] = {}
     with console.status("[bold]fetching digests...") as status:
         for tool in TOOLS:
             tag = f"{tool.tag_prefix}{tool.version}"
             status.update(f"[bold]{tool.name}[/] · {tag}")
+            if tool.url_template:
+                result[tool.name] = download_and_hash(tool)
+                continue
             digests = gh_release_digests(gh, tool.repo, tag)
             shas: dict[Platform, str] = {}
             for pf, template in tool.assets.items():

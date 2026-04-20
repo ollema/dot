@@ -368,7 +368,13 @@ class TestManifestIntegrity:
                 asset = install.resolve_asset(tool, pf)
                 assert "{" not in asset, f"{tool.name} left an unresolved placeholder: {asset}"
                 url = install.download_url(tool, asset)
-                assert url.startswith(f"https://github.com/{tool.repo}/releases/download/"), url
+                assert "{" not in url, f"{tool.name} left an unresolved placeholder: {url}"
+                expected_prefix = (
+                    tool.url_template.split("{", 1)[0]
+                    if tool.url_template
+                    else f"https://github.com/{tool.repo}/releases/download/"
+                )
+                assert url.startswith(expected_prefix), url
 
     def test_every_tool_has_sha_for_every_declared_platform(
         self, tools_list: list[install.Tool]

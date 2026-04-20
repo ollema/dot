@@ -61,6 +61,8 @@ def download(url: str) -> bytes:
 
 
 def download_url(tool: Tool, asset_name: str) -> str:
+    if tool.url_template:
+        return tool.url_template.format(version=tool.version, asset=asset_name)
     return f"{GITHUB}/{tool.repo}/releases/download/{tool.tag_prefix}{tool.version}/{asset_name}"
 
 
