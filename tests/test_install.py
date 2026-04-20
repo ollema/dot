@@ -120,6 +120,22 @@ class TestDownloadUrl:
             f"https://github.com/BurntSushi/ripgrep/releases/download/{expected_tag}/foo.tar.gz"
         )
 
+    def test_url_template_substitutes_version_and_asset(self) -> None:
+        tool = make_tool(
+            version="0.5.0",
+            url_template="https://example.com/{version}/{asset}",
+        )
+        assert install.download_url(tool, "foo-0.5.0.tar.gz") == (
+            "https://example.com/0.5.0/foo-0.5.0.tar.gz"
+        )
+
+    def test_url_template_ignores_tag_prefix(self) -> None:
+        # tag_prefix only decorates the github release path; url_template bypasses it.
+        tool = make_tool(
+            tag_prefix="should-not-appear-", url_template="https://example.com/{asset}"
+        )
+        assert install.download_url(tool, "asset.tar.gz") == "https://example.com/asset.tar.gz"
+
 
 class TestFindBinary:
     def test_finds_nested_file(self, tmp_path: Path) -> None:
