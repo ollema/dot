@@ -2,6 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+${env_var.ZMX_SESSION}\
 $username\
 $hostname\
 $directory\
@@ -64,3 +65,8 @@ format = "[$virtualenv]($style) "
 style = "grey"
 detect_extensions = []
 detect_files = []
+
+[env_var.ZMX_SESSION]
+format = "[$env_value]($style) "
+style = "purple"
+description = "zmx session name"
