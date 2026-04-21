@@ -38,9 +38,6 @@ if status is-interactive
     abbr -a df df -h
     abbr -a du du -h
 
-    # autossh for zmx sessions (ash d.term, ash t.dev, etc.)
-    abbr -a ash "autossh -M 0 -q"
-
     # helpful aliases
     alias reload "exec fish"
 

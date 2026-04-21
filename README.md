@@ -36,9 +36,10 @@ These are either:
 
 ```bash
 > brew leaves
-autossh
 eza
 ffmpeg
 gh
 git-lfs
+node
+pnpm
 ```
