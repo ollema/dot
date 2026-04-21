@@ -2,7 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-${env_var.ZMX_SESSION}\
+${custom.zmx}\
 $username\
 $hostname\
 $directory\
@@ -66,7 +66,9 @@ style = "grey"
 detect_extensions = []
 detect_files = []
 
-[env_var.ZMX_SESSION]
-format = "[$env_value]($style) "
+[custom.zmx]
+description = "zmx session name, stripping t. prefix"
+when = 'test -n "$ZMX_SESSION"'
+command = 'printf "%s" "$ZMX_SESSION" | sed "s/^t\.//"'
+format = '[\[zmx: $output\]]($style) '
 style = "purple"
-description = "zmx session name"
