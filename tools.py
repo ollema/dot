@@ -202,6 +202,21 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
+        name="yazi",
+        repo="sxyazi/yazi",
+        version="26.1.22",
+        is_zip=True,
+        extra_binaries=["ya"],
+        assets={
+            Platform.DARWIN_ARM64: "yazi-aarch64-apple-darwin.zip",
+            Platform.LINUX_AMD64: "yazi-x86_64-unknown-linux-musl.zip",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "8355ad582dd9f4ef1f88a228080f2b6116bbb483dd48d1bde555d475f4d2afe4",
+            Platform.LINUX_AMD64: "b977351968206c0b78d2ef5bf21351685cc191b58a4c7e1c98c37db5d0a381f8",
+        },
+    ),
+    Tool(
         name="zmx",
         repo="neurosnap/zmx",
         version="0.5.0",
