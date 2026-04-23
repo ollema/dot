@@ -7,7 +7,7 @@ dotfiles
 ```sh
 uv run symlink.py --dry-run   # preview symlinks
 uv run symlink.py             # apply them
-uv run install.py             # download binaries listed in tools.toml into ~/.local/bin
+uv run install.py             # download binaries listed in tools.py into ~/.local/bin
 ```
 
 ## Development
@@ -23,7 +23,7 @@ Run a single check directly:
 ```sh
 uv run ruff check
 uv run ruff format
-uv run ty check install.py symlink.py tools.py tests
+uv run ty check install.py platforms.py symlink.py tools.py ui.py update_shas.py tests
 uv run pytest
 ```
 
