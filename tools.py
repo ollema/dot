@@ -63,10 +63,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.34",
+        version="1.0.36",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "2670c0aa92b29e3aa4046b41417b074b9888fbeca9065901a435d374dacc7084"
+            Platform.LINUX_AMD64: "9b8a00aa6140e0b6eb0245262f7d3f8bdb170a2e782609acdf3d206bbc27b431"
         },
     ),
     Tool(
@@ -120,14 +120,14 @@ TOOLS: list[Tool] = [
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.71.0",
+        version="0.72.0",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "02dfb11de8773cb79aa4fc5bfc77e75c6604ee14728bc849fc162dd91a9714c4",
-            Platform.LINUX_AMD64: "22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4",
+            Platform.DARWIN_ARM64: "4cbf87e8e8a342614c1e3e74670ceb18c2af998c4d4d0c379cfee9b520774e90",
+            Platform.LINUX_AMD64: "0e58e4bd0b3c5d68c56b54c460a6863d0de79633ed18d388575a960ab447b006",
         },
     ),
     Tool(
@@ -145,7 +145,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="neovim",
         repo="neovim/neovim",
-        version="0.12.1",
+        version="0.12.2",
         binary="nvim",
         prefix_install=True,
         assets={
@@ -154,8 +154,8 @@ TOOLS: list[Tool] = [
         },
         symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
-            Platform.DARWIN_ARM64: "b77e01c5421ac1bac593eed5c2ea1b950439306dd4c32371ac2473792da9a9d5",
-            Platform.LINUX_AMD64: "ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0",
+            Platform.DARWIN_ARM64: "eeddee1009734f9071266e6b1b8a70308cb60cbcc45f5e1c1023adc471450fee",
+            Platform.LINUX_AMD64: "31cf85945cb600d96cdf69f88bc68bec814acbff50863c5546adef3a1bcef260",
         },
     ),
     Tool(
