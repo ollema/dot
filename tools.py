@@ -61,6 +61,21 @@ TOOLS: list[Tool] = [
         },
     ),
     Tool(
+        name="bottom",
+        repo="ClementTsang/bottom",
+        version="0.12.3",
+        tag_prefix="",
+        binary="btm",
+        assets={
+            Platform.DARWIN_ARM64: "bottom_aarch64-apple-darwin.tar.gz",
+            Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
+        },
+        sha256={
+            Platform.DARWIN_ARM64: "106e9493d20192d18dbe46d4c99f680d817c796724103ee258567070fcd16429",
+            Platform.LINUX_AMD64: "0d6352079422fda8f4ee242eb849f45a6008db96d6c1cd35e8436babc51bc33f",
+        },
+    ),
+    Tool(
         name="copilot",
         repo="github/copilot-cli",
         version="1.0.36",
