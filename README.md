@@ -40,6 +40,7 @@ eza
 ffmpeg
 gh
 git-lfs
+libpq
 node
 pnpm
 ```

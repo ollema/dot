@@ -3,6 +3,7 @@ if test (uname) = Darwin
 end
 
 fish_add_path -g $HOME/.local/bin
+fish_add_path -g /opt/homebrew/opt/libpq/bin
 
 set -gx EDITOR nvim
 set -gx VISUAL nvim
