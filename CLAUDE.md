@@ -2,9 +2,9 @@
 
 ## Agent skills
 
-### Backlog
+### Issue tracker
 
-Issues and PRDs live as markdown files under `.scratch/<feature-slug>/`. See `docs/agents/backlog.md`.
+Issues and PRDs live as markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
