@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.37",
+        version="1.0.40",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "20a38271a9b88d0a013f5be50c7bbe8af9a85f7fda7d848421e6d6ad7fe8cf8d"
+            Platform.LINUX_AMD64: "113945f763c0f7abc95f7a0405e429c5857aa0a8422b41300048b2df9906ccf6"
         },
     ),
     Tool(
@@ -191,15 +191,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="starship",
         repo="starship/starship",
-        version="1.25.0",
+        version="1.25.1",
         assets={
             Platform.DARWIN_ARM64: "starship-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "starship-x86_64-unknown-linux-musl.tar.gz",
         },
         symlinks=[Link(source="starship/starship.toml", target="~/.config/starship.toml")],
         sha256={
-            Platform.DARWIN_ARM64: "365301b5f4938322a9f378764b4bc640048bca7d6ac28eaabd406cadd6fc703a",
-            Platform.LINUX_AMD64: "0169f187e927a0ee9abf41bb80e316717fea6e37e404267bca5134c6ea10c0ed",
+            Platform.DARWIN_ARM64: "1062a2363489b9335529b83204472f02633c08fc3609f1b325be5eba36feb631",
+            Platform.LINUX_AMD64: "c6ddd3ecb9c0071a2ad38d98cee748160066b7c4f197421268058f4a5d6f8504",
         },
     ),
     Tool(
