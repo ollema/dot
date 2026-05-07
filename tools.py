@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.40",
+        version="1.0.43",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "113945f763c0f7abc95f7a0405e429c5857aa0a8422b41300048b2df9906ccf6"
+            Platform.LINUX_AMD64: "60855021a4ac901a70717e25505000b25a1159a472f9889791b019c77db358df"
         },
     ),
     Tool(
@@ -123,13 +123,13 @@ TOOLS: list[Tool] = [
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.6.0",
+        version="4.7.0",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
         symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "497c9c4e3fb3c006fe9d2c9a5a5447c1c90490b6b4ce6bfaf75e53b495c82f36"
+            Platform.LINUX_AMD64: "5a3e4551f8aca94d829727f74001823f2035551a9a36345142bef0f64205d62e"
         },
     ),
     Tool(
@@ -219,7 +219,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="yazi",
         repo="sxyazi/yazi",
-        version="26.1.22",
+        version="26.5.6",
         is_zip=True,
         extra_binaries=["ya"],
         assets={
@@ -227,8 +227,8 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "yazi-x86_64-unknown-linux-musl.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "8355ad582dd9f4ef1f88a228080f2b6116bbb483dd48d1bde555d475f4d2afe4",
-            Platform.LINUX_AMD64: "b977351968206c0b78d2ef5bf21351685cc191b58a4c7e1c98c37db5d0a381f8",
+            Platform.DARWIN_ARM64: "7abd71725e2fe27bed036becbf6ce79fa17964eb68491d34190011c94b8c7ca8",
+            Platform.LINUX_AMD64: "1031a02560d053301537195a6661d227c15cb4ce5c30481050b31e2b88681bff",
         },
     ),
     Tool(
