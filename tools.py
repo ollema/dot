@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.43",
+        version="1.0.47",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "60855021a4ac901a70717e25505000b25a1159a472f9889791b019c77db358df"
+            Platform.LINUX_AMD64: "3188d30786b18ef02d907596db0b3b65c9cad2039b8a212bd045d44a3db32ecd"
         },
     ),
     Tool(
@@ -123,13 +123,13 @@ TOOLS: list[Tool] = [
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.7.0",
+        version="4.7.1",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
         symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "5a3e4551f8aca94d829727f74001823f2035551a9a36345142bef0f64205d62e"
+            Platform.LINUX_AMD64: "345388add316b94a847b08cef01f1b46e85b98215328271ee22a21555a3204df"
         },
     ),
     Tool(
