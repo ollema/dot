@@ -1,0 +1,26 @@
+{
+  "skill_name": "update-nvim-plugins",
+  "evals": [
+    {
+      "id": 1,
+      "name": "pin-to-specific-commit",
+      "prompt": "I want nvim-treesitter pinned to commit 4916d6592ede8c07973490d9322f187e07dfefac specifically — I don't want it to move when I run 'update all'. How should I set that up?",
+      "expected_output": "Identifies this is a config change, not an update. Redirects to adding a `version = '4916d6592ede8c07973490d9322f187e07dfefac'` field to the `vim.pack.add({...})` spec for nvim-treesitter in ~/.dot/nvim/plugin/40_plugins.lua. Then runs headless `vim.pack.update()` so vim.pack reconciles. Does NOT hand-edit nvim-pack-lock.json. (Baseline often skips the config-side change and hand-edits the lockfile, which doesn't actually pin — vim.pack will overwrite the lockfile on next update.)",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "lockfile-drift-recovery",
+      "prompt": "I think someone (maybe me) hand-edited my nvim-pack-lock.json at some point and now what's on disk doesn't match what the lockfile says. How do I get them back in sync — with the lockfile as the source of truth?",
+      "expected_output": "Names `vim.pack.update(nil, { target = 'lockfile' })` as the documented recovery — forces on-disk clones to match the lockfile. Mentions that `:checkhealth vim.pack` is the diagnostic for confirming the drift. Warns that this can move clones *backwards* if the lockfile is older than disk, so confirm intent first. (Baseline is unlikely to know about `target = 'lockfile'` — it's an undocumented-in-`:help` API surface mentioned only in vim.pack guides.)",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "force-push-detection",
+      "prompt": "I ran an update check and the comparison API said one of my plugins is `{ahead: 0, behind: 12}` relative to upstream HEAD. What does that mean and what should I do?",
+      "expected_output": "Explains this means upstream rewrote history (force-push or branch reset): our pinned commit no longer reaches upstream HEAD via fast-forward. Advises STOPPING rather than auto-bumping to the new tip, because silently moving forward could skip a deliberate pin or hide upstream malfeasance. Suggests investigating: is the pinned commit still reachable as a dangling commit, was the project intentionally rebased, should we pin to the new tip explicitly. (Baseline may give a generic 'upstream has changes you don't' answer that misses the force-push interpretation.)",
+      "files": []
+    }
+  ]
+}
