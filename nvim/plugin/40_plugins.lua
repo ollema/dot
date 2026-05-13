@@ -95,6 +95,9 @@ end
 -- inside 'neovim/nvim-lspconfig' plugin.
 --
 -- Add it now if file (and not 'mini.starter') is shown after startup.
+--
+-- Troubleshooting:
+-- - Run `:checkhealth vim.lsp` to see potential issues.
 now_if_args(function()
   add({ 'https://github.com/neovim/nvim-lspconfig' })
 

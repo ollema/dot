@@ -10,9 +10,9 @@ syncing from upstream.
 ## Baseline
 
 - Upstream: `nvim-mini/MiniMax`, `configs/nvim-0.13/`
-- Adopted: 2026-04-17 in commit `7b7cb0f use minimax config`
-- Baseline commit at adoption: `f76d787` (2026-04-11) — last MiniMax commit
-  before `7b7cb0f`
+- Adopted: 2026-04-17 in commit `7b7cb0f use minimax config` at MiniMax `f76d787`
+- Current baseline: `8135af2` (2026-05-09) — bump this when refreshing from
+  upstream
 
 To refresh: copy `configs/nvim-0.13/` from a newer MiniMax commit on top of
 `nvim/`, then reapply the two functional deviations below. Plugin revs in
@@ -60,7 +60,11 @@ matches upstream.
 
 ### `nvim-pack-lock.json`
 
-Add an `everforest` entry alongside the MiniMax-managed plugins:
+The lockfile is **not overlaid** during a MiniMax refresh — `vim.pack` owns it,
+and `update-nvim-plugins` is the right tool for rev bumps. The only deviation
+worth noting is that this repo carries an extra `everforest` entry (paired with
+the colorscheme deviation above) that has no counterpart in upstream MiniMax's
+lockfile:
 
 ```json
 "everforest": {
@@ -69,9 +73,9 @@ Add an `everforest` entry alongside the MiniMax-managed plugins:
 }
 ```
 
-The other plugin revs drift from baseline through routine bumps and are not
-intentional deviations — refresh them with the `update-nvim-plugins` skill, not
-by hand.
+A refresh should leave this entry alone — verify it's still present after the
+overlay (it will be, since the overlay skips this file), don't try to re-add
+it.
 
 ## Verifying after a refresh
 
