@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.47",
+        version="1.0.49",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "3188d30786b18ef02d907596db0b3b65c9cad2039b8a212bd045d44a3db32ecd"
+            Platform.LINUX_AMD64: "e61fa2490bc584fe65c4d9f3b2337ef63439cbd9e0a4f6648eb63223e1b32afd"
         },
     ),
     Tool(
@@ -205,15 +205,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="tree-sitter",
         repo="tree-sitter/tree-sitter",
-        version="0.26.8",
+        version="0.26.9",
         is_zip=True,
         assets={
             Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
             Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "9dc0dc3415a1cd30499750579defbf3f8e000a98f12a65cda8e25981f07e7b0f",
-            Platform.LINUX_AMD64: "9377d83479ee8e05dce7d2b51442087c7fdd620015834c24fea1a86d4bd0a85b",
+            Platform.DARWIN_ARM64: "86e81a78eee96f4fd730e43589ecc80263f7e34be7a0558ccebff9a492e8ad97",
+            Platform.LINUX_AMD64: "0ea5daaef79145fe73786f0e3cdc43b62b22ddb36f7f6676c9f8bb72434d78e9",
         },
     ),
     Tool(
@@ -234,15 +234,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="zmx",
         repo="neurosnap/zmx",
-        version="0.5.0",
+        version="0.6.0",
         url_template="https://zmx.sh/a/{asset}",
         assets={
             Platform.DARWIN_ARM64: "zmx-{version}-macos-aarch64.tar.gz",
             Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "3b9379f0ff0cf107f7f87048d2c45f6fbeabed588d676ad86ac218bed928d107",
-            Platform.LINUX_AMD64: "4cc1f6b854dccdcabae4cb91bd0379a23e6f8210048af5d81e0661e594a50c28",
+            Platform.DARWIN_ARM64: "621b85f25a1c73399e4ee46f482afc7cffb4638446e8d0eef5acaa57c2b79b4e",
+            Platform.LINUX_AMD64: "46e2b458f3247c117bc39e4eb959b58c4e5ec23fc62d776411e3dcb431bd2e3d",
         },
     ),
 ]
