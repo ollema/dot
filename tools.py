@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.49",
+        version="1.0.54",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "e61fa2490bc584fe65c4d9f3b2337ef63439cbd9e0a4f6648eb63223e1b32afd"
+            Platform.LINUX_AMD64: "a24a665390b427c623a8b0ffd9967cde2dc0ae60126e9bde585c2bff137f4f10"
         },
     ),
     Tool(
@@ -135,14 +135,14 @@ TOOLS: list[Tool] = [
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.72.0",
+        version="0.73.1",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "4cbf87e8e8a342614c1e3e74670ceb18c2af998c4d4d0c379cfee9b520774e90",
-            Platform.LINUX_AMD64: "0e58e4bd0b3c5d68c56b54c460a6863d0de79633ed18d388575a960ab447b006",
+            Platform.DARWIN_ARM64: "d27fd68c04fb9b42f7c73a3f7d38069a74d308e40174f64a072c747213e97286",
+            Platform.LINUX_AMD64: "f3252c2c366bc1700d3c85781ec8c9695998927ac127870eb049ceea2d540f8a",
         },
     ),
     Tool(
