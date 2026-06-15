@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.54",
+        version="1.0.62",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "a24a665390b427c623a8b0ffd9967cde2dc0ae60126e9bde585c2bff137f4f10"
+            Platform.LINUX_AMD64: "cbb4a400c86a187631ded6bf8177aadf9f2886fca5a9e27998449151a28cf3c8"
         },
     ),
     Tool(
@@ -160,7 +160,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="neovim",
         repo="neovim/neovim",
-        version="0.12.2",
+        version="0.12.3",
         binary="nvim",
         prefix_install=True,
         assets={
@@ -169,8 +169,8 @@ TOOLS: list[Tool] = [
         },
         symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
-            Platform.DARWIN_ARM64: "eeddee1009734f9071266e6b1b8a70308cb60cbcc45f5e1c1023adc471450fee",
-            Platform.LINUX_AMD64: "31cf85945cb600d96cdf69f88bc68bec814acbff50863c5546adef3a1bcef260",
+            Platform.DARWIN_ARM64: "532da1d00e465a660fa01c3d4991333d09c52107dce7df937368545daca0a14e",
+            Platform.LINUX_AMD64: "c441b547142860bf01bcce39e36cbed185c41112813e15443b16e5237750724d",
         },
     ),
     Tool(
@@ -241,8 +241,8 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "621b85f25a1c73399e4ee46f482afc7cffb4638446e8d0eef5acaa57c2b79b4e",
-            Platform.LINUX_AMD64: "46e2b458f3247c117bc39e4eb959b58c4e5ec23fc62d776411e3dcb431bd2e3d",
+            Platform.DARWIN_ARM64: "7f1e4d967d41dea0df76bc7c5dd0d5795e7e54fd657a5f0c74fbfb2c0699390e",
+            Platform.LINUX_AMD64: "7ee4b12150dd0d736d271ba1cb06942244c10b857841a663517297ac65c720dd",
         },
     ),
 ]
