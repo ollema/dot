@@ -1,6 +1,6 @@
 ---
 name: update-nvim-from-minimax
-description: Refresh ~/.dot/nvim/ structural files (init.lua, plugin/*, after/*, snippets/) from a newer commit of the upstream MiniMax (nvim-mini/MiniMax) config, then reapply the intentional deviations documented in ~/.dot/nvim/CLAUDE.md. Use this skill whenever the user wants to pull a newer MiniMax baseline into their nvim config, sync their nvim setup with upstream MiniMax, check whether MiniMax has new commits since their pinned baseline, or refresh non-plugin parts of nvim from upstream — phrases like "update my nvim config from upstream", "is MiniMax ahead", "sync nvim with MiniMax", "pull latest MiniMax", "bump the MiniMax baseline", "what's new in MiniMax". This is structural — for plugin commit bumps in nvim-pack-lock.json, use the sibling skill `update-nvim-plugins` instead.
+description: Refresh ~/.dot/nvim/ structural files (init.lua, plugin/*, after/*, snippets/) from a newer commit of the upstream MiniMax (nvim-mini/MiniMax) config, then reapply the intentional deviations documented in ~/.dot/nvim/AGENTS.md. Use this skill whenever the user wants to pull a newer MiniMax baseline into their nvim config, sync their nvim setup with upstream MiniMax, check whether MiniMax has new commits since their pinned baseline, or refresh non-plugin parts of nvim from upstream — phrases like "update my nvim config from upstream", "is MiniMax ahead", "sync nvim with MiniMax", "pull latest MiniMax", "bump the MiniMax baseline", "what's new in MiniMax". This is structural — for plugin commit bumps in nvim-pack-lock.json, use the sibling skill `update-nvim-plugins` instead.
 ---
 
 # Updating ~/.dot/nvim/ from a newer MiniMax baseline
@@ -11,18 +11,18 @@ For commit bumps to entries in `nvim-pack-lock.json` (mini.nvim, conform.nvim, t
 
 ## What the repo already knows
 
-Read `~/.dot/nvim/CLAUDE.md` first. It's the source of truth for the baseline and the deviations and the whole skill depends on it being accurate.
+Read `~/.dot/nvim/AGENTS.md` first. It's the source of truth for the baseline and the deviations and the whole skill depends on it being accurate.
 
-- The CLAUDE.md "Baseline" section records the pinned MiniMax commit (e.g. `f76d787`) and which config variant is in use (e.g. `configs/nvim-0.13/`). MiniMax ships parallel variants for nvim 0.10–0.13; the user's pin is the one to track.
-- The CLAUDE.md "Intentional deviations" section lists every functional change vs that baseline, with the exact code to reapply. Comments and structure are deliberately kept identical to upstream so the diff stays small. If the list has grown stale (deviations made in git that aren't in CLAUDE.md), surface that *before* overlaying — the overlay will silently wipe them otherwise.
+- The AGENTS.md "Baseline" section records the pinned MiniMax commit (e.g. `f76d787`) and which config variant is in use (e.g. `configs/nvim-0.13/`). MiniMax ships parallel variants for nvim 0.10–0.13; the user's pin is the one to track.
+- The AGENTS.md "Intentional deviations" section lists every functional change vs that baseline, with the exact code to reapply. Comments and structure are deliberately kept identical to upstream so the diff stays small. If the list has grown stale (deviations made in git that aren't in AGENTS.md), surface that *before* overlaying — the overlay will silently wipe them otherwise.
 - `~/.dot/nvim/nvim-pack-lock.json` is *also* owned by upstream MiniMax in the source tree, but in this repo it's managed by `vim.pack` and routinely diverges. Never overlay the lockfile from MiniMax — that's `update-nvim-plugins`' job.
 - Upstream lives at `github.com/nvim-mini/MiniMax`. `gh api` is the right tool for both commit lookups and content fetches. The default branch is `main`.
 
 ## Workflow
 
-### 1. Read the baseline from CLAUDE.md
+### 1. Read the baseline from AGENTS.md
 
-Open `~/.dot/nvim/CLAUDE.md` and pull out:
+Open `~/.dot/nvim/AGENTS.md` and pull out:
 
 - The pinned baseline commit SHA (under "Baseline").
 - The config variant path (e.g. `configs/nvim-0.13/`).
@@ -83,7 +83,7 @@ Three possible paths from here:
 
 ### 4. Sanity-check that the working tree matches the recorded baseline
 
-Before overlaying, fetch the *baseline* MiniMax files into a temp dir and diff against the current `~/.dot/nvim/`. The diff should reduce to exactly the deviations listed in CLAUDE.md (plus `nvim-pack-lock.json` rev drift, which is expected).
+Before overlaying, fetch the *baseline* MiniMax files into a temp dir and diff against the current `~/.dot/nvim/`. The diff should reduce to exactly the deviations listed in AGENTS.md (plus `nvim-pack-lock.json` rev drift, which is expected).
 
 ```sh
 TMPDIR_BASELINE=$(mktemp -d)
@@ -103,9 +103,9 @@ environment is even more restrictive (no process substitution, no
 `PATH`-inheritance), write the fetch to a small script with an explicit
 `export PATH=/opt/homebrew/bin:/usr/bin:/bin` at the top and run that.
 
-If the diff includes anything *not* in CLAUDE.md's deviations list, stop and tell the user — there's an undocumented local change that the overlay will silently overwrite. Two recoveries:
+If the diff includes anything *not* in AGENTS.md's deviations list, stop and tell the user — there's an undocumented local change that the overlay will silently overwrite. Two recoveries:
 
-- Add the change to CLAUDE.md first (most common: it's a deviation that just wasn't recorded), or
+- Add the change to AGENTS.md first (most common: it's a deviation that just wasn't recorded), or
 - Discard the local change (e.g. it's experimental).
 
 This check is the safety net. Skipping it is how the user loses uncommitted work.
@@ -132,7 +132,7 @@ Don't delete files that exist locally but not in upstream — the user may have 
 
 ### 7. Reapply the deviations
 
-For each entry in CLAUDE.md's "Intentional deviations" section, apply the recorded change to the overlaid file. The Edit tool is fine for additive changes (appending the colorscheme block, adding a lockfile entry). For wrap-style changes (e.g. wrapping a block in `if vim.env.NVIM_NO_EXTERNAL_TREESITTER ~= '1' then ... end`), the trick is:
+For each entry in AGENTS.md's "Intentional deviations" section, apply the recorded change to the overlaid file. The Edit tool is fine for additive changes (appending the colorscheme block, adding a lockfile entry). For wrap-style changes (e.g. wrapping a block in `if vim.env.NVIM_NO_EXTERNAL_TREESITTER ~= '1' then ... end`), the trick is:
 
 - Find the anchor (start/end of the block being wrapped) in the *new* upstream file.
 - Apply the wrap and re-indent the wrapped lines one level.
@@ -148,7 +148,7 @@ Diff the overlaid + reapplied `nvim/` against the *new* upstream tree:
 diff -r "$TMPDIR_NEW" ~/.dot/nvim --brief
 ```
 
-The output should match exactly what CLAUDE.md predicts. If something extra differs (e.g. a file the deviations list doesn't mention), the overlay missed something or the reapply went wrong — investigate before continuing.
+The output should match exactly what AGENTS.md predicts. If something extra differs (e.g. a file the deviations list doesn't mention), the overlay missed something or the reapply went wrong — investigate before continuing.
 
 Also run a quick sanity launch:
 
@@ -158,9 +158,9 @@ NVIM_NO_EXTERNAL_TREESITTER=1 nvim --headless -c 'quitall' 2>&1
 
 This catches syntax errors in the overlaid Lua files without triggering tree-sitter parser builds. Any stderr means the config is broken — surface it and stop.
 
-### 9. Update the baseline pointer in CLAUDE.md
+### 9. Update the baseline pointer in AGENTS.md
 
-Once the overlay is verified, advance the `Current baseline:` line in `~/.dot/nvim/CLAUDE.md` to the new SHA and date. Leave the `Adopted:` line alone — that's a historical record of the initial bootstrap commit, not the refresh pointer. If MiniMax now ships a config variant the user wants to switch to (e.g. they're on `nvim-0.13` and `nvim-0.14` just appeared), that's a separate decision — surface it, don't switch unilaterally.
+Once the overlay is verified, advance the `Current baseline:` line in `~/.dot/nvim/AGENTS.md` to the new SHA and date. Leave the `Adopted:` line alone — that's a historical record of the initial bootstrap commit, not the refresh pointer. If MiniMax now ships a config variant the user wants to switch to (e.g. they're on `nvim-0.13` and `nvim-0.14` just appeared), that's a separate decision — surface it, don't switch unilaterally.
 
 ### 10. Show the diff and offer to commit
 
@@ -173,7 +173,7 @@ Summarize: "synced nvim from MiniMax f76d787 → 8135af2 (5 commits)". Existing 
 ## Edge cases
 
 - **A deviation no longer applies cleanly.** Upstream rewrote the surrounding code — e.g. they refactored the tree-sitter block such that the `if vim.env.NVIM_NO_EXTERNAL_TREESITTER` wrap no longer has the right anchor. Surface this to the user with the upstream diff *and* the deviation, and let them decide: re-author the deviation against the new shape, drop the deviation if upstream now does the same thing natively, or skip the bump entirely. Don't try to be clever about merging — wrong choices here are silent.
-- **CLAUDE.md is out of date.** The step-4 sanity check will catch this. The right fix is to update CLAUDE.md *first* (a separate commit), then run the skill again. Don't paper over the discrepancy by quietly carrying the undocumented change through the overlay.
+- **AGENTS.md is out of date.** The step-4 sanity check will catch this. The right fix is to update AGENTS.md *first* (a separate commit), then run the skill again. Don't paper over the discrepancy by quietly carrying the undocumented change through the overlay.
 - **MiniMax added a new config variant** (e.g. `configs/nvim-0.14/`). The user is still pinned to the old one. Mention the new variant but don't switch — moving variants is a larger decision (different nvim version requirements, possibly different file layouts).
 - **MiniMax removed a file** that the user has locally. Could be the user added it themselves (fine, keep it) or upstream genuinely retired a file the user is using (their config will still work, but the file is now orphaned). Ask before deleting.
 - **The user's variant has been deprecated upstream** (e.g. `configs/nvim-0.12/` is no longer maintained). The `git/trees` lookup will still return the old files at the baseline ref, but `commits/HEAD` won't show changes to it. Surface this and recommend planning a variant migration.

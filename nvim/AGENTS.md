@@ -1,4 +1,4 @@
-# nvim/CLAUDE.md
+# nvim/AGENTS.md
 
 This config was bootstrapped from [MiniMax](https://github.com/nvim-mini/MiniMax)
 and is kept structurally identical to upstream. Comments, ordering, and the
