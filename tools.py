@@ -63,7 +63,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="bottom",
         repo="ClementTsang/bottom",
-        version="0.12.3",
+        version="0.14.2",
         tag_prefix="",
         binary="btm",
         assets={
@@ -71,17 +71,17 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "106e9493d20192d18dbe46d4c99f680d817c796724103ee258567070fcd16429",
-            Platform.LINUX_AMD64: "0d6352079422fda8f4ee242eb849f45a6008db96d6c1cd35e8436babc51bc33f",
+            Platform.DARWIN_ARM64: "69cdfe0fbf3f3a3efba9f54b9a89f740b24344b4cfa3efb6857a4e76ace8cf6a",
+            Platform.LINUX_AMD64: "a07639baae1481f7155d53130eb6aa5d5fdc67aa0453570cdefa06f151cc9ee4",
         },
     ),
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.62",
+        version="1.0.65",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "cbb4a400c86a187631ded6bf8177aadf9f2886fca5a9e27998449151a28cf3c8"
+            Platform.LINUX_AMD64: "da36be29a5afc7c6cef63b25ac10ee1862216a0f5efabed502ed42c4e0f62af8"
         },
     ),
     Tool(
@@ -123,13 +123,13 @@ TOOLS: list[Tool] = [
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.7.1",
+        version="4.8.0",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
         symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "345388add316b94a847b08cef01f1b46e85b98215328271ee22a21555a3204df"
+            Platform.LINUX_AMD64: "98f7916878fc76be797cabf284f185b56f31a35681e3aec9b9faf7a4a6aa0d74"
         },
     ),
     Tool(
@@ -148,13 +148,13 @@ TOOLS: list[Tool] = [
     Tool(
         name="jq",
         repo="jqlang/jq",
-        version="1.8.1",
+        version="1.8.2",
         tag_prefix="jq-",
         is_raw_binary=True,
         assets={Platform.DARWIN_ARM64: "jq-macos-arm64", Platform.LINUX_AMD64: "jq-linux-amd64"},
         sha256={
-            Platform.DARWIN_ARM64: "a9fe3ea2f86dfc72f6728417521ec9067b343277152b114f4e98d8cb0e263603",
-            Platform.LINUX_AMD64: "020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d",
+            Platform.DARWIN_ARM64: "2d75340ba57a4b4b4c8708a21c2dc8e958a48aaa8bba13b27f77f6e4c0eca07e",
+            Platform.LINUX_AMD64: "b1c22172dd303f3be49e935aa56aa48a8b7a46e0bc838b4997d3bb451495870f",
         },
     ),
     Tool(
@@ -191,29 +191,29 @@ TOOLS: list[Tool] = [
     Tool(
         name="starship",
         repo="starship/starship",
-        version="1.25.1",
+        version="1.26.0",
         assets={
             Platform.DARWIN_ARM64: "starship-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "starship-x86_64-unknown-linux-musl.tar.gz",
         },
         symlinks=[Link(source="starship/starship.toml", target="~/.config/starship.toml")],
         sha256={
-            Platform.DARWIN_ARM64: "1062a2363489b9335529b83204472f02633c08fc3609f1b325be5eba36feb631",
-            Platform.LINUX_AMD64: "c6ddd3ecb9c0071a2ad38d98cee748160066b7c4f197421268058f4a5d6f8504",
+            Platform.DARWIN_ARM64: "c40b27b11f580411e068f2fa6c1be7830a387c0bc47a94d1d37f32b054c5361d",
+            Platform.LINUX_AMD64: "b7c232b0e8249d8e55a40beb79c5c43a7d370f3f9408bd215deb0170daeaadf3",
         },
     ),
     Tool(
         name="tree-sitter",
         repo="tree-sitter/tree-sitter",
-        version="0.26.9",
+        version="0.26.10",
         is_zip=True,
         assets={
             Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
             Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "86e81a78eee96f4fd730e43589ecc80263f7e34be7a0558ccebff9a492e8ad97",
-            Platform.LINUX_AMD64: "0ea5daaef79145fe73786f0e3cdc43b62b22ddb36f7f6676c9f8bb72434d78e9",
+            Platform.DARWIN_ARM64: "47a1ee94f39611d28c79baa61a3f7bdb5fd1b076428f18fd8082628dc2eca2da",
+            Platform.LINUX_AMD64: "5aca1172aae08050d0d1184046377d850c04065205185ebafde361afff8d9f62",
         },
     ),
     Tool(
