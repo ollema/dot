@@ -11,7 +11,7 @@ syncing from upstream.
 
 - Upstream: `nvim-mini/MiniMax`, `configs/nvim-0.13/`
 - Adopted: 2026-04-17 in commit `7b7cb0f use minimax config` at MiniMax `f76d787`
-- Current baseline: `8135af2` (2026-05-09) — bump this when refreshing from
+- Current baseline: `35dfab3` (2026-06-27) — bump this when refreshing from
   upstream
 
 To refresh: copy `configs/nvim-0.13/` from a newer MiniMax commit on top of
