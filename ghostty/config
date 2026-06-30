@@ -3,7 +3,7 @@ auto-update = check
 auto-update-channel = tip
 
 # shell config
-command = /usr/local/bin/fish
+command = /opt/homebrew/bin/fish
 
 # theming
 theme = Everforest Dark Hard

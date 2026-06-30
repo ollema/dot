@@ -38,9 +38,10 @@ These are either:
 > brew leaves
 eza
 ffmpeg
+fish
 gh
 git-lfs
-libpq
 node
 pnpm
+uv
 ```
