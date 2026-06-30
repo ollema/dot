@@ -1,6 +1,6 @@
 Host hal sindre teamserver t.*
     User s0001325
-    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_ed25519_zenseact
     IdentitiesOnly yes
 
 Host hal sindre
@@ -26,5 +26,6 @@ Host t.*
     ServerAliveInterval 30
 
 Host *
+    IdentityFile ~/.ssh/id_ed25519
     HashKnownHosts yes
     PreferredAuthentications publickey
