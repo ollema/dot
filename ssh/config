@@ -1,4 +1,4 @@
-Host hal sindre teamserver t.*
+Host hal sindre teamserver t.* gerrit.cicd.autoheim.net
     User s0001325
     IdentityFile ~/.ssh/id_ed25519_zenseact
     IdentitiesOnly yes
