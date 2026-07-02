@@ -63,7 +63,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="bottom",
         repo="ClementTsang/bottom",
-        version="0.14.2",
+        version="0.14.3",
         tag_prefix="",
         binary="btm",
         assets={
@@ -71,17 +71,17 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "69cdfe0fbf3f3a3efba9f54b9a89f740b24344b4cfa3efb6857a4e76ace8cf6a",
-            Platform.LINUX_AMD64: "a07639baae1481f7155d53130eb6aa5d5fdc67aa0453570cdefa06f151cc9ee4",
+            Platform.DARWIN_ARM64: "ef37c83382359e3b098e1311e3ea933c4f5d0e3042709887a68c102d607c973d",
+            Platform.LINUX_AMD64: "5d57590147c7cfe83b4cb249be0d06b6c31b4efe706cc403d6e8c0806299423e",
         },
     ),
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.65",
+        version="1.0.68",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "da36be29a5afc7c6cef63b25ac10ee1862216a0f5efabed502ed42c4e0f62af8"
+            Platform.LINUX_AMD64: "b9531ebf40c2e4c084e5204c9875924a036647bb7f014c4651cf1da2a2053f88"
         },
     ),
     Tool(
