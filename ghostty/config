@@ -7,4 +7,4 @@ command = /opt/homebrew/bin/fish
 
 # theming
 theme = Everforest Dark Hard
-font-family = CaskaydiaCove Nerd Font Mono
+font-family = Cascadia Mono NF
