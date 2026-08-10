@@ -63,7 +63,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="bottom",
         repo="ClementTsang/bottom",
-        version="0.14.3",
+        version="0.14.7",
         tag_prefix="",
         binary="btm",
         assets={
@@ -71,17 +71,17 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "ef37c83382359e3b098e1311e3ea933c4f5d0e3042709887a68c102d607c973d",
-            Platform.LINUX_AMD64: "5d57590147c7cfe83b4cb249be0d06b6c31b4efe706cc403d6e8c0806299423e",
+            Platform.DARWIN_ARM64: "aaf5c61c0c29b35a205fe1cff590d900716ea61e7d7c5efc8a3ebfbf624a81a2",
+            Platform.LINUX_AMD64: "060f157720194906393d0118e01a84f654b93749575d896b5331499d5ead06ee",
         },
     ),
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.68",
+        version="1.0.78",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "b9531ebf40c2e4c084e5204c9875924a036647bb7f014c4651cf1da2a2053f88"
+            Platform.LINUX_AMD64: "8935cbe2916b0b1cb724aaa81fdda29e2ec20b2ea76f1d2708fb788e47acfad9"
         },
     ),
     Tool(
@@ -101,10 +101,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="eza",
         repo="eza-community/eza",
-        version="0.23.4",
+        version="0.23.5",
         assets={Platform.LINUX_AMD64: "eza_x86_64-unknown-linux-gnu.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "0c38665440226cd8bef5d1d4f3bc6ff77c927fb0d68b752739105db7ab5b358d"
+            Platform.LINUX_AMD64: "35c70c5c43c29108075e58b893234c67ef585f0b53a7eaf8e9e7d4eec9f339b4"
         },
     ),
     Tool(
@@ -123,26 +123,26 @@ TOOLS: list[Tool] = [
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.8.0",
+        version="4.8.1",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
         symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "98f7916878fc76be797cabf284f185b56f31a35681e3aec9b9faf7a4a6aa0d74"
+            Platform.LINUX_AMD64: "39cab35242ab77bfdbce73b473000c3b045aaf2fe0951b042199bb7fdba3df78"
         },
     ),
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.73.1",
+        version="0.74.2",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "d27fd68c04fb9b42f7c73a3f7d38069a74d308e40174f64a072c747213e97286",
-            Platform.LINUX_AMD64: "f3252c2c366bc1700d3c85781ec8c9695998927ac127870eb049ceea2d540f8a",
+            Platform.DARWIN_ARM64: "d60ddb36356566ac69bae7c3504e888916cf747c9ad2132141c09229b1e28dee",
+            Platform.LINUX_AMD64: "b3648f48675612b69ee35371cf6dc99ca96d767e89b912d079080916ac8ba8bd",
         },
     ),
     Tool(
@@ -160,7 +160,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="neovim",
         repo="neovim/neovim",
-        version="0.12.3",
+        version="0.12.4",
         binary="nvim",
         prefix_install=True,
         assets={
@@ -169,14 +169,14 @@ TOOLS: list[Tool] = [
         },
         symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
-            Platform.DARWIN_ARM64: "532da1d00e465a660fa01c3d4991333d09c52107dce7df937368545daca0a14e",
-            Platform.LINUX_AMD64: "c441b547142860bf01bcce39e36cbed185c41112813e15443b16e5237750724d",
+            Platform.DARWIN_ARM64: "51ab83afa66d663627c2ab1be43209b0f4e81360d4598b53efaa4d8195f24c89",
+            Platform.LINUX_AMD64: "012bf3fcac5ade43914df3f174668bf64d05e049a4f032a388c027b1ebd78628",
         },
     ),
     Tool(
         name="ripgrep",
         repo="BurntSushi/ripgrep",
-        version="15.1.0",
+        version="15.2.0",
         tag_prefix="",
         binary="rg",
         assets={
@@ -184,8 +184,8 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "ripgrep-{version}-x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715",
-            Platform.LINUX_AMD64: "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599",
+            Platform.DARWIN_ARM64: "3750b2e93f37e0c692657da574d7019a101c0084da05a790c83fd335bad973e4",
+            Platform.LINUX_AMD64: "33e15bcf1624b25cdd2a55813a47a2f95dbe126268203e76aa6a585d1e7b149c",
         },
     ),
     Tool(
@@ -205,15 +205,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="tree-sitter",
         repo="tree-sitter/tree-sitter",
-        version="0.26.10",
+        version="0.26.12",
         is_zip=True,
         assets={
             Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
             Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "47a1ee94f39611d28c79baa61a3f7bdb5fd1b076428f18fd8082628dc2eca2da",
-            Platform.LINUX_AMD64: "5aca1172aae08050d0d1184046377d850c04065205185ebafde361afff8d9f62",
+            Platform.DARWIN_ARM64: "3ca18160518d0ac8f631448c771ac102748482af518992adcb09f96423ba153f",
+            Platform.LINUX_AMD64: "c33ace12fa7a94d09c97054da621bf7a6a3159f765b1839a898232de283d641d",
         },
     ),
     Tool(
@@ -234,15 +234,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="zmx",
         repo="neurosnap/zmx",
-        version="0.6.0",
+        version="0.7.0",
         url_template="https://zmx.sh/a/{asset}",
         assets={
             Platform.DARWIN_ARM64: "zmx-{version}-macos-aarch64.tar.gz",
             Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "7f1e4d967d41dea0df76bc7c5dd0d5795e7e54fd657a5f0c74fbfb2c0699390e",
-            Platform.LINUX_AMD64: "7ee4b12150dd0d736d271ba1cb06942244c10b857841a663517297ac65c720dd",
+            Platform.DARWIN_ARM64: "a63d6f3edd6d4b38240f8f81513e60e35a898ca520211112d7bc67f610f1f3eb",
+            Platform.LINUX_AMD64: "8b8783d7b120c9ffd0acf4aee37969054dc0dfef3c4f3a4728d2efd35f2e97a0",
         },
     ),
 ]
