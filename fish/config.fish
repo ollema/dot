@@ -32,6 +32,7 @@ if status is-interactive
     abbr -a gcm git commit -m
     abbr -a gac "git add .; git commit --amend --no-edit"
     abbr -a gp git push
+    abbr -a gd git diff
     abbr -a gl git log --oneline --graph --decorate
 
     # sane defaults
