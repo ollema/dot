@@ -63,7 +63,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="bottom",
         repo="ClementTsang/bottom",
-        version="0.14.7",
+        version="0.14.8",
         tag_prefix="",
         binary="btm",
         assets={
@@ -71,17 +71,17 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "aaf5c61c0c29b35a205fe1cff590d900716ea61e7d7c5efc8a3ebfbf624a81a2",
-            Platform.LINUX_AMD64: "060f157720194906393d0118e01a84f654b93749575d896b5331499d5ead06ee",
+            Platform.DARWIN_ARM64: "60138a19944eeb8cb177fea4f4d6d042d3971828de0418b034618d6837d62c1a",
+            Platform.LINUX_AMD64: "9d071c11a5b5bf266f05aa6519a43ad353330155d3d5627a750572d85ed19f54",
         },
     ),
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.78",
+        version="1.0.80",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "8935cbe2916b0b1cb724aaa81fdda29e2ec20b2ea76f1d2708fb788e47acfad9"
+            Platform.LINUX_AMD64: "039933c9247686131c4406abb1d439bdbf68103edc1ff585bd70d5b0dc940f72"
         },
     ),
     Tool(
@@ -135,14 +135,14 @@ TOOLS: list[Tool] = [
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.74.2",
+        version="0.74.3",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "d60ddb36356566ac69bae7c3504e888916cf747c9ad2132141c09229b1e28dee",
-            Platform.LINUX_AMD64: "b3648f48675612b69ee35371cf6dc99ca96d767e89b912d079080916ac8ba8bd",
+            Platform.DARWIN_ARM64: "1f8501cea4f9c0c2d6110d0ff75d0ec9451cd9d7524d9a26244a154ea89f3bd5",
+            Platform.LINUX_AMD64: "3501a595e4b5c40a6b047340a0e8f805c46fd4e61ef95ef8a136ba8c61cf6f22",
         },
     ),
     Tool(
@@ -219,7 +219,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="yazi",
         repo="sxyazi/yazi",
-        version="26.5.6",
+        version="26.8.15",
         is_zip=True,
         extra_binaries=["ya"],
         assets={
@@ -227,8 +227,8 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "yazi-x86_64-unknown-linux-musl.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "7abd71725e2fe27bed036becbf6ce79fa17964eb68491d34190011c94b8c7ca8",
-            Platform.LINUX_AMD64: "1031a02560d053301537195a6661d227c15cb4ce5c30481050b31e2b88681bff",
+            Platform.DARWIN_ARM64: "3f54907ea08abe96506f4b22239340ed8923a6aeaeae78f33d59bce57daca4cd",
+            Platform.LINUX_AMD64: "a6702034790afcdbb546b73b288c9b184a751fa3f2f17f0ad4d26fc302fb8d45",
         },
     ),
     Tool(
