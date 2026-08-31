@@ -63,7 +63,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="bottom",
         repo="ClementTsang/bottom",
-        version="0.14.8",
+        version="0.14.9",
         tag_prefix="",
         binary="btm",
         assets={
@@ -71,17 +71,17 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "bottom_x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "60138a19944eeb8cb177fea4f4d6d042d3971828de0418b034618d6837d62c1a",
-            Platform.LINUX_AMD64: "9d071c11a5b5bf266f05aa6519a43ad353330155d3d5627a750572d85ed19f54",
+            Platform.DARWIN_ARM64: "28358e19a3d62b3778fc0d1778b0028a682059145c9ac38ac5076bf124d77714",
+            Platform.LINUX_AMD64: "b4bee5b193e7d3f6e090ac14f0ca15acec2e7fe4ef64988e0bfc492e16c28c9a",
         },
     ),
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.80",
+        version="1.0.82",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "039933c9247686131c4406abb1d439bdbf68103edc1ff585bd70d5b0dc940f72"
+            Platform.LINUX_AMD64: "37fa67686a9e4ed8d46dcd6a9c80ab524dea840ecaa0a3f7edf8d09f961b97a9"
         },
     ),
     Tool(
@@ -96,14 +96,14 @@ TOOLS: list[Tool] = [
     Tool(
         name="fd",
         repo="sharkdp/fd",
-        version="10.4.2",
+        version="10.5.0",
         assets={
             Platform.DARWIN_ARM64: "fd-v{version}-aarch64-apple-darwin.tar.gz",
             Platform.LINUX_AMD64: "fd-v{version}-x86_64-unknown-linux-musl.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "623dc0afc81b92e4d4606b380d7bc91916ba7b97814263e554d50923a39e480a",
-            Platform.LINUX_AMD64: "e3257d48e29a6be965187dbd24ce9af564e0fe67b3e73c9bdcd180f4ec11bdde",
+            Platform.DARWIN_ARM64: "b67e1836c468e42e411984b56e52fa7abec08c2bd22c867398e7cc134aac5e12",
+            Platform.LINUX_AMD64: "761c72dc8e120d85b22292063be8a796e2eeb20eb3e4f38b8fa2343ccf3514a7",
         },
     ),
     Tool(
@@ -146,7 +146,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="neovim",
         repo="neovim/neovim",
-        version="0.12.4",
+        version="0.12.5",
         binary="nvim",
         prefix_install=True,
         assets={
@@ -155,8 +155,8 @@ TOOLS: list[Tool] = [
         },
         symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
-            Platform.DARWIN_ARM64: "51ab83afa66d663627c2ab1be43209b0f4e81360d4598b53efaa4d8195f24c89",
-            Platform.LINUX_AMD64: "012bf3fcac5ade43914df3f174668bf64d05e049a4f032a388c027b1ebd78628",
+            Platform.DARWIN_ARM64: "65fb000099e47ca1b762584c484cc833f40e30851a0ec450d4174e16317c1f9b",
+            Platform.LINUX_AMD64: "bce0f56eda1f1b1db6eee8f4133d7a38813ea07933837dd1777411ca384c6875",
         },
     ),
     Tool(
@@ -191,15 +191,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="tree-sitter",
         repo="tree-sitter/tree-sitter",
-        version="0.26.12",
+        version="0.27.0",
         is_zip=True,
         assets={
             Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
             Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "3ca18160518d0ac8f631448c771ac102748482af518992adcb09f96423ba153f",
-            Platform.LINUX_AMD64: "c33ace12fa7a94d09c97054da621bf7a6a3159f765b1839a898232de283d641d",
+            Platform.DARWIN_ARM64: "f278063d8544160f6f89f7f8dba6ba112cb0dd1669757788d2bb7a8a613d2c58",
+            Platform.LINUX_AMD64: "e4a3826bcd0fe099ee3a5617767374939cbc23c4a35b5b53f5fc04142525a2c1",
         },
     ),
     Tool(
@@ -220,15 +220,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="zmx",
         repo="neurosnap/zmx",
-        version="0.7.0",
+        version="0.7.1",
         url_template="https://zmx.sh/a/{asset}",
         assets={
             Platform.DARWIN_ARM64: "zmx-{version}-macos-aarch64.tar.gz",
             Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "a63d6f3edd6d4b38240f8f81513e60e35a898ca520211112d7bc67f610f1f3eb",
-            Platform.LINUX_AMD64: "8b8783d7b120c9ffd0acf4aee37969054dc0dfef3c4f3a4728d2efd35f2e97a0",
+            Platform.DARWIN_ARM64: "86ce4c0eeb6b8448d058390fabe4a5aff323c4fc1e64ed578d48ab75a0f59a79",
+            Platform.LINUX_AMD64: "ec82d753e12537b79a76bce73399d57698e529f4744eb5a1a9bcfa6fda7c4b25",
         },
     ),
 ]
