@@ -28,4 +28,4 @@ Host t.*
 Host *
     IdentityFile ~/.ssh/id_ed25519
     HashKnownHosts yes
-    PreferredAuthentications publickey
+    PreferredAuthentications publickey,keyboard-interactive,password
