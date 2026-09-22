@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.82",
+        version="1.0.87",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "37fa67686a9e4ed8d46dcd6a9c80ab524dea840ecaa0a3f7edf8d09f961b97a9"
+            Platform.LINUX_AMD64: "49d81b184f1a1b358af676155fe97e341b9d9f0bc8dd25190dfe17087669b5b9"
         },
     ),
     Tool(
@@ -109,26 +109,26 @@ TOOLS: list[Tool] = [
     Tool(
         name="fish",
         repo="fish-shell/fish-shell",
-        version="4.8.1",
+        version="4.9.3",
         tag_prefix="",
         extra_binaries=["fish_indent", "fish_key_reader"],
         assets={Platform.LINUX_AMD64: "fish-{version}-linux-x86_64.tar.xz"},
         symlinks=[Link(source="fish", target="~/.config/fish")],
         sha256={
-            Platform.LINUX_AMD64: "39cab35242ab77bfdbce73b473000c3b045aaf2fe0951b042199bb7fdba3df78"
+            Platform.LINUX_AMD64: "8f643d10ad1abb0ef7072764c01ceb5cf61b2d373fda400cf60f0bad69b7e095"
         },
     ),
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.74.3",
+        version="0.74.4",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "1f8501cea4f9c0c2d6110d0ff75d0ec9451cd9d7524d9a26244a154ea89f3bd5",
-            Platform.LINUX_AMD64: "3501a595e4b5c40a6b047340a0e8f805c46fd4e61ef95ef8a136ba8c61cf6f22",
+            Platform.DARWIN_ARM64: "4f6a113bfc0c7959e0005c78d566a51afc4fcefc956f43735c62a9deb19e92ae",
+            Platform.LINUX_AMD64: "05e6813a337cc722c3ed07e54a764b75cc5d671e2e60459db0ba696ee5fa7504",
         },
     ),
     Tool(
@@ -205,7 +205,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="yazi",
         repo="sxyazi/yazi",
-        version="26.8.15",
+        version="26.9.1",
         is_zip=True,
         extra_binaries=["ya"],
         assets={
@@ -213,22 +213,22 @@ TOOLS: list[Tool] = [
             Platform.LINUX_AMD64: "yazi-x86_64-unknown-linux-musl.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "3f54907ea08abe96506f4b22239340ed8923a6aeaeae78f33d59bce57daca4cd",
-            Platform.LINUX_AMD64: "a6702034790afcdbb546b73b288c9b184a751fa3f2f17f0ad4d26fc302fb8d45",
+            Platform.DARWIN_ARM64: "3921182a21cceb0a505e5dac578e1487d48104caa5f114e9f8adf40b5a7289a9",
+            Platform.LINUX_AMD64: "9b9c39decccf8cb0ff53a7d637d38f8a79d93bbd0099f4ea9c619ef6bb392f5d",
         },
     ),
     Tool(
         name="zmx",
         repo="neurosnap/zmx",
-        version="0.7.1",
+        version="0.8.1",
         url_template="https://zmx.sh/a/{asset}",
         assets={
             Platform.DARWIN_ARM64: "zmx-{version}-macos-aarch64.tar.gz",
             Platform.LINUX_AMD64: "zmx-{version}-linux-x86_64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "86ce4c0eeb6b8448d058390fabe4a5aff323c4fc1e64ed578d48ab75a0f59a79",
-            Platform.LINUX_AMD64: "ec82d753e12537b79a76bce73399d57698e529f4744eb5a1a9bcfa6fda7c4b25",
+            Platform.DARWIN_ARM64: "1d86b1c9fba47fa707a6f0e976b20510b07c1c26d0ed010b9414b2a2c5e6beef",
+            Platform.LINUX_AMD64: "dfd75720b942466f28870731cc86dbc07afa72fb8f3bd5eeb4ff707e4eecebe8",
         },
     ),
 ]
