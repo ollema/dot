@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.92",
+        version="1.0.96",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "1d8daedb9cdb200061471cabe9f924f80293689cb9c42489344864c044f33ea9"
+            Platform.LINUX_AMD64: "66b60b58b14d72390f30d6d7f8480d18a0f05c111d132e4ff8f92ae637d413f8"
         },
     ),
     Tool(
@@ -121,14 +121,14 @@ TOOLS: list[Tool] = [
     Tool(
         name="fzf",
         repo="junegunn/fzf",
-        version="0.74.4",
+        version="0.74.5",
         assets={
             Platform.DARWIN_ARM64: "fzf-{version}-darwin_arm64.tar.gz",
             Platform.LINUX_AMD64: "fzf-{version}-linux_amd64.tar.gz",
         },
         sha256={
-            Platform.DARWIN_ARM64: "4f6a113bfc0c7959e0005c78d566a51afc4fcefc956f43735c62a9deb19e92ae",
-            Platform.LINUX_AMD64: "05e6813a337cc722c3ed07e54a764b75cc5d671e2e60459db0ba696ee5fa7504",
+            Platform.DARWIN_ARM64: "ada808c7401b9949ce8842274ac16a6b6193fd32dcada396884a6a9a89e5985a",
+            Platform.LINUX_AMD64: "d47d7f882972c7d674dbbba998ffa4116e68379616ffac7695d0671e9a722c5f",
         },
     ),
     Tool(
@@ -146,7 +146,7 @@ TOOLS: list[Tool] = [
     Tool(
         name="neovim",
         repo="neovim/neovim",
-        version="0.12.5",
+        version="0.12.6",
         binary="nvim",
         prefix_install=True,
         assets={
@@ -155,8 +155,8 @@ TOOLS: list[Tool] = [
         },
         symlinks=[Link(source="nvim", target="~/.config/nvim")],
         sha256={
-            Platform.DARWIN_ARM64: "65fb000099e47ca1b762584c484cc833f40e30851a0ec450d4174e16317c1f9b",
-            Platform.LINUX_AMD64: "bce0f56eda1f1b1db6eee8f4133d7a38813ea07933837dd1777411ca384c6875",
+            Platform.DARWIN_ARM64: "1dbd148222b051ba6c307c4d17a318ed083df018a4f6a5a0ce46955ffc9ab87b",
+            Platform.LINUX_AMD64: "474430d53e6264f6d6dd18db42d6dc9df3a1b56ca9e88a325bbf860e1a811d87",
         },
     ),
     Tool(
@@ -191,15 +191,15 @@ TOOLS: list[Tool] = [
     Tool(
         name="tree-sitter",
         repo="tree-sitter/tree-sitter",
-        version="0.27.0",
+        version="0.27.1",
         is_zip=True,
         assets={
             Platform.DARWIN_ARM64: "tree-sitter-cli-macos-arm64.zip",
             Platform.LINUX_AMD64: "tree-sitter-cli-linux-x64.zip",
         },
         sha256={
-            Platform.DARWIN_ARM64: "f278063d8544160f6f89f7f8dba6ba112cb0dd1669757788d2bb7a8a613d2c58",
-            Platform.LINUX_AMD64: "e4a3826bcd0fe099ee3a5617767374939cbc23c4a35b5b53f5fc04142525a2c1",
+            Platform.DARWIN_ARM64: "6362cda144b6e45d92c739d4eafb7e3c322f0545b0b959b4f7ca7d53fb3300fa",
+            Platform.LINUX_AMD64: "c7e686aec16ba17053c2e6fd87600ccb10cf8ba3d055756b17e756d538e11114",
         },
     ),
     Tool(
