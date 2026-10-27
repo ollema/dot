@@ -1,5 +1,12 @@
 if test (uname) = Darwin
     /opt/homebrew/bin/brew shellenv | source
+
+    # tailscale CLI lives inside the app bundle
+    for dir in /Applications $HOME/Applications
+        if test -x $dir/Tailscale.app/Contents/MacOS/Tailscale
+            fish_add_path -g $dir/Tailscale.app/Contents/MacOS
+        end
+    end
 end
 
 fish_add_path -g $HOME/.local/bin
