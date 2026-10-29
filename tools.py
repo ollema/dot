@@ -78,10 +78,10 @@ TOOLS: list[Tool] = [
     Tool(
         name="copilot",
         repo="github/copilot-cli",
-        version="1.0.102",
+        version="1.0.105",
         assets={Platform.LINUX_AMD64: "copilot-linux-x64.tar.gz"},
         sha256={
-            Platform.LINUX_AMD64: "cabbb04a88a8034ddfa21234cbd52b7676536aec2b292624e6fd6796f891a8ff"
+            Platform.LINUX_AMD64: "aba1f06f27bc0447656647f76e0a4cf58b4b2a341c75ff04a750982b6aeb6bd2"
         },
     ),
     Tool(
